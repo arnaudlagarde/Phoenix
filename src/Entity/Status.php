@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StatusRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: StatusRepository::class)]
@@ -21,6 +23,14 @@ class Status
 
     #[ORM\Column(type: 'integer')]
     private $value;
+
+    #[ORM\OneToMany(mappedBy: 'status', targetEntity: projet::class)]
+    private $projet;
+
+    public function __construct()
+    {
+        $this->projet = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,6 +69,36 @@ class Status
     public function setValue(int $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|projet[]
+     */
+    public function getProjet(): Collection
+    {
+        return $this->projet;
+    }
+
+    public function addProjet(projet $projet): self
+    {
+        if (!$this->projet->contains($projet)) {
+            $this->projet[] = $projet;
+            $projet->setStatus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjet(projet $projet): self
+    {
+        if ($this->projet->removeElement($projet)) {
+            // set the owning side to null (unless already changed)
+            if ($projet->getStatus() === $this) {
+                $projet->setStatus(null);
+            }
+        }
 
         return $this;
     }
