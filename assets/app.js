@@ -6,7 +6,13 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/app.css';
+import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+
+let projectId = document.querySelector('.my-project').dataset.projectId;
+let projectCode = document.querySelector('[data-project-code]').dataset.projectCode;
+
+console.log(projectId);
+console.log(projectCode);
