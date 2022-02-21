@@ -21,7 +21,7 @@ class ProjectController extends AbstractController
     public function show(ProjetRepository $projetRepository, Projet $projet)
     {
         return $this->render('project/index.html.twig', [
-            
+
         ]);
     }
 }
