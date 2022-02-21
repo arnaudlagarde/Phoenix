@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ProjetRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: ProjetRepository::class)]
 class Projet
@@ -30,6 +31,11 @@ class Projet
 
     #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'projet')]
     private $status;
+
+    #[Pure] public function __toString(): string
+    {
+        return (string) $this->getTitle();
+    }
 
     public function getId(): ?int
     {
