@@ -22,7 +22,7 @@ class Budget
     #[ORM\Column(type: 'float')]
     private $RemainingBudget;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'float')]
     private $TurnoverBudget;
 
     public function getId(): ?int
@@ -66,12 +66,12 @@ class Budget
         return $this;
     }
 
-    public function getTurnoverBudget(): ?string
+    public function getTurnoverBudget(): ?float
     {
         return $this->TurnoverBudget;
     }
 
-    public function setTurnoverBudget(string $TurnoverBudget): self
+    public function setTurnoverBudget(float $TurnoverBudget): self
     {
         $this->TurnoverBudget = $TurnoverBudget;
 
