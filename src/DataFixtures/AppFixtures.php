@@ -17,7 +17,6 @@ class AppFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        $date = new DateTimeImmutable('2022-01-01');
         for ($i = 0; $i < 4; $i++) {
             $status[$i] = new Status();
             $status[$i]->setName('test');
@@ -30,7 +29,6 @@ class AppFixtures extends Fixture
             $projects[$i] = new Projet();
             $projects[$i]->setTitle($faker->text(80));
             $projects[$i]->setDescription($faker->realTextBetween($minNbChars = 200, $maxNbChars = 450, $indexSize = 2));
-            $projects[$i]->setCreatedAt($date);
             $projects[$i]->setEndedAt($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris') );
             $projects[$i]->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris') );
 

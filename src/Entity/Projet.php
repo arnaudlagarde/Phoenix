@@ -26,9 +26,6 @@ class Projet
     #[ORM\Column(type: 'date', nullable: true)]
     private $endedAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private $createdAt;
-
     #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'projet')]
     private $status;
 
@@ -88,19 +85,6 @@ class Projet
         $this->endedAt = $endedAt;
 
         return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAt(\DateTimeImmutable $createdAt): void
-    {
-        $this->createdAt = $createdAt;
     }
 
     public function getStatus(): ?Status
