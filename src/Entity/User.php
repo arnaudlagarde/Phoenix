@@ -28,6 +28,9 @@ class User
     #[ORM\Column(type: 'string', length: 255)]
     private $Role;
 
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'responsible')]
+    private $team;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class User
     public function setRole(string $Role): self
     {
         $this->Role = $Role;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): self
+    {
+        $this->team = $team;
 
         return $this;
     }

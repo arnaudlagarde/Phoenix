@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BudgetRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BudgetRepository::class)]
@@ -24,6 +26,14 @@ class Budget
 
     #[ORM\Column(type: 'float')]
     private $TurnoverBudget;
+
+    #[ORM\OneToMany(mappedBy: 'Budget', targetEntity: Projet::class)]
+    private $projets;
+
+    public function __construct()
+    {
+        $this->projets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +84,36 @@ class Budget
     public function setTurnoverBudget(float $TurnoverBudget): self
     {
         $this->TurnoverBudget = $TurnoverBudget;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Projet[]
+     */
+    public function getProjets(): Collection
+    {
+        return $this->projets;
+    }
+
+    public function addProjet(Projet $projet): self
+    {
+        if (!$this->projets->contains($projet)) {
+            $this->projets[] = $projet;
+            $projet->setBudget($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjet(Projet $projet): self
+    {
+        if ($this->projets->removeElement($projet)) {
+            // set the owning side to null (unless already changed)
+            if ($projet->getBudget() === $this) {
+                $projet->setBudget(null);
+            }
+        }
 
         return $this;
     }

@@ -28,6 +28,9 @@ class Risk
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $Probability;
 
+    #[ORM\ManyToOne(targetEntity: Projet::class, inversedBy: 'Risk')]
+    private $projet;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Risk
     public function setProbability(?string $Probability): self
     {
         $this->Probability = $Probability;
+
+        return $this;
+    }
+
+    public function getProjet(): ?Projet
+    {
+        return $this->projet;
+    }
+
+    public function setProjet(?Projet $projet): self
+    {
+        $this->projet = $projet;
 
         return $this;
     }

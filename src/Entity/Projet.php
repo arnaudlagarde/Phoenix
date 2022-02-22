@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProjetRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
 
@@ -31,6 +33,27 @@ class Projet
 
     #[ORM\ManyToOne(targetEntity: Portfolio::class, inversedBy: 'Projet')]
     private $portfolio;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $code;
+
+    #[ORM\ManyToOne(targetEntity: Budget::class, inversedBy: 'projets')]
+    private $Budget;
+
+    #[ORM\OneToMany(mappedBy: 'projet', targetEntity: CrucialFact::class)]
+    private $CrucialFact;
+
+    #[ORM\OneToMany(mappedBy: 'projet', targetEntity: Risk::class)]
+    private $Risk;
+
+    #[ORM\Column(type: 'boolean')]
+    private $Done;
+
+    public function __construct()
+    {
+        $this->CrucialFact = new ArrayCollection();
+        $this->Risk = new ArrayCollection();
+    }
 
     #[Pure] public function __toString(): string
     {
@@ -110,6 +133,102 @@ class Projet
     public function setPortfolio(?Portfolio $portfolio): self
     {
         $this->portfolio = $portfolio;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(?string $code): self
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    public function getBudget(): ?Budget
+    {
+        return $this->Budget;
+    }
+
+    public function setBudget(?Budget $Budget): self
+    {
+        $this->Budget = $Budget;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CrucialFact[]
+     */
+    public function getCrucialFact(): Collection
+    {
+        return $this->CrucialFact;
+    }
+
+    public function addCrucialFact(CrucialFact $crucialFact): self
+    {
+        if (!$this->CrucialFact->contains($crucialFact)) {
+            $this->CrucialFact[] = $crucialFact;
+            $crucialFact->setProjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCrucialFact(CrucialFact $crucialFact): self
+    {
+        if ($this->CrucialFact->removeElement($crucialFact)) {
+            // set the owning side to null (unless already changed)
+            if ($crucialFact->getProjet() === $this) {
+                $crucialFact->setProjet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Risk[]
+     */
+    public function getRisk(): Collection
+    {
+        return $this->Risk;
+    }
+
+    public function addRisk(Risk $risk): self
+    {
+        if (!$this->Risk->contains($risk)) {
+            $this->Risk[] = $risk;
+            $risk->setProjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRisk(Risk $risk): self
+    {
+        if ($this->Risk->removeElement($risk)) {
+            // set the owning side to null (unless already changed)
+            if ($risk->getProjet() === $this) {
+                $risk->setProjet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDone(): ?bool
+    {
+        return $this->Done;
+    }
+
+    public function setDone(bool $Done): self
+    {
+        $this->Done = $Done;
 
         return $this;
     }

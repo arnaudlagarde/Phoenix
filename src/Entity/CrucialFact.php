@@ -25,6 +25,9 @@ class CrucialFact
     #[ORM\ManyToOne(targetEntity: Tag::class, inversedBy: 'crucialFacts')]
     private $Tag;
 
+    #[ORM\ManyToOne(targetEntity: Projet::class, inversedBy: 'CrucialFact')]
+    private $projet;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class CrucialFact
     public function setTag(?Tag $Tag): self
     {
         $this->Tag = $Tag;
+
+        return $this;
+    }
+
+    public function getProjet(): ?Projet
+    {
+        return $this->projet;
+    }
+
+    public function setProjet(?Projet $projet): self
+    {
+        $this->projet = $projet;
 
         return $this;
     }
