@@ -17,10 +17,11 @@ class ProjectController extends AbstractController
             'projects' => $projetRepository->findAll(),
         ]);
     }
-    #[Route('/projects/{id}', name: 'app_show_project')]
-    public function show(ProjetRepository $projetRepository, Projet $projet)
+    #[Route('/project/{id}', name: 'app_show_project')]
+    public function show(Projet $project): Response
     {
-        return $this->render('project/index.html.twig', [
+        return $this->render('project/show.html.twig', [
+            'project' => $project,
 
         ]);
     }
