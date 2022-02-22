@@ -2,6 +2,8 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Status;
+use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -15,7 +17,14 @@ class AppFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
 
         $date = new DateTimeImmutable('2022-01-01');
-        $projects = array();
+        for ($i = 0; $i < 4; $i++) {
+            $status[$i] = new Status();
+            $status[$i]->setName('test');
+            $status[$i]->setSlug('test');
+            $status[$i]->setValue(1);
+
+            $manager->persist($status[$i]);
+        }
         for ($i = 0; $i < 50; $i++) {
             $projects[$i] = new Projet();
             $projects[$i]->setTitle($faker->text(80));
@@ -23,8 +32,16 @@ class AppFixtures extends Fixture
             $projects[$i]->setCreatedAt($date);
             $projects[$i]->setEndedAt($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris') );
             $projects[$i]->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris') );
+            $projects[$i]->setStatus($status);
 
             $manager->persist($projects[$i]);
+        }
+        for ($i = 0; $i < 15; $i++) {
+            $users[$i] = new User();
+            $users[$i]->setFirstname($faker->firstName);
+            $users[$i]->setLastname($faker->lastName);
+
+            $manager->persist($users[$i]);
         }
 
         $manager->flush();
