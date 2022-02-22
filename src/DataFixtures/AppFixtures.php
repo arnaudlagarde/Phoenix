@@ -46,6 +46,7 @@ class AppFixtures extends Fixture
         $admin = new Admin();
         $admin->setUsername('root');
         $admin->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC');
+        $admin->setRoles((array)'ROLE_ADMIN');
         $manager->persist($admin);
 
         $manager->flush();
