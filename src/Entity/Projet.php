@@ -29,6 +29,9 @@ class Projet
     #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: 'projet')]
     private $status;
 
+    #[ORM\ManyToOne(targetEntity: Portfolio::class, inversedBy: 'Projet')]
+    private $portfolio;
+
     #[Pure] public function __toString(): string
     {
         return (string) $this->getTitle();
@@ -95,6 +98,18 @@ class Projet
     public function setStatus(?Status $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getPortfolio(): ?Portfolio
+    {
+        return $this->portfolio;
+    }
+
+    public function setPortfolio(?Portfolio $portfolio): self
+    {
+        $this->portfolio = $portfolio;
 
         return $this;
     }
