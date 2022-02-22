@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($status[$i]);
         }
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $projects[$i] = new Projet();
             $projects[$i]->setTitle($faker->text(80));
             $projects[$i]->setDescription($faker->realTextBetween($minNbChars = 200, $maxNbChars = 450, $indexSize = 2));
