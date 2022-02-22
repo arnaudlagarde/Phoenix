@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Admin;
 use App\Entity\Status;
 use App\Entity\User;
 use DateTimeImmutable;
@@ -32,7 +33,6 @@ class AppFixtures extends Fixture
             $projects[$i]->setCreatedAt($date);
             $projects[$i]->setEndedAt($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris') );
             $projects[$i]->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris') );
-            $projects[$i]->setStatus($status);
 
             $manager->persist($projects[$i]);
         }
@@ -43,6 +43,10 @@ class AppFixtures extends Fixture
 
             $manager->persist($users[$i]);
         }
+        $admin = new Admin();
+        $admin->setUsername('root');
+        $admin->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC');
+        $manager->persist($admin);
 
         $manager->flush();
     }
