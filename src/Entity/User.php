@@ -19,6 +19,15 @@ class User
     #[ORM\Column(type: 'string', length: 255)]
     private $Lastname;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $Email;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $Password;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $Role;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +53,42 @@ class User
     public function setLastname(string $Lastname): self
     {
         $this->Lastname = $Lastname;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->Email;
+    }
+
+    public function setEmail(string $Email): self
+    {
+        $this->Email = $Email;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->Password;
+    }
+
+    public function setPassword(string $Password): self
+    {
+        $this->Password = $Password;
+
+        return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->Role;
+    }
+
+    public function setRole(string $Role): self
+    {
+        $this->Role = $Role;
 
         return $this;
     }
