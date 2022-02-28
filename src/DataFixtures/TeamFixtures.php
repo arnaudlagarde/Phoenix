@@ -15,11 +15,13 @@ class TeamFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        $team = (new Team())
-            ->setName('team oe');
-        $this->setReference(self::TEAM_REFERENCE, $team);
+        foreach (range(0, 2) as $i) {
+            $team = (new Team())
+                ->setName('team n°' . $i);
+            $this->setReference(self::TEAM_REFERENCE, $team);
 
-        $manager->persist($team);
+            $manager->persist($team);
+        }
         $manager->flush();
     }
 }
