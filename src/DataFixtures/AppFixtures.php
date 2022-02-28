@@ -4,8 +4,12 @@ namespace App\DataFixtures;
 
 use App\Entity\Admin;
 use App\Entity\Budget;
+use App\Entity\CrucialFact;
 use App\Entity\Portfolio;
+use App\Entity\Risk;
 use App\Entity\Status;
+use App\Entity\Tag;
+use App\Entity\Team;
 use App\Entity\User;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -28,13 +32,48 @@ class AppFixtures extends Fixture
             $manager->persist($status[$i]);
         }
 
+        for ($i = 0; $i < 4; $i++) {
+            $portfolio[$i] = new Portfolio();
+            $portfolio[$i]->setName('Mon portfolio n°'. $i);
+
+            $manager->persist($portfolio[$i]);
+        }
         $portfolio = new Portfolio();
+        $portfolio->setName("Main Portfolio");
+
+
 
         foreach(range(0, 20) as $i) {
             $budget = (new Budget())
                 ->setInitialValue($faker->randomFloat(111, 500, 100000))
                 ->setConsumedValue($faker->randomFloat(111, 1, 20000));
             $budget->setRemainingBudget($budget->getInitialValue() - $budget->getConsumedValue());
+
+            $manager->persist($budget);
+
+
+            $crucialFact = (new CrucialFact())
+                ->setName('aaaa')
+                ->setDescription('aaaaaaaaaaaaaaaaa')
+                ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
+
+            $tag = (new Tag())
+                ->setName('My tag')
+                ->addCrucialFact($crucialFact)
+                ->setValue(1)
+                ->setMandatory(1);
+
+
+            $manager->persist($tag);
+
+            $risk = (new Risk())
+                ->setName('testrisk')
+                ->setCritical('testcritical')
+                ->setProbability(1)
+                ->setIdentificationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
+                ->setResolutionDate($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
+                ->getProjet();
+
 
             $project = (new Projet())
                 ->setTitle($faker->text(80))
@@ -43,7 +82,15 @@ class AppFixtures extends Fixture
                 ->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
                 ->setCode('red')
                 ->setDone($faker->boolean)
-                ->setPortfolio($portfolio);
+                ->setPortfolio($portfolio)
+                ->setBudget($budget)
+                ->addCrucialFact($crucialFact);
+
+            $team = (new Team())
+                ->setName('team oe');
+            $manager->persist($team);
+
+
 
             $manager->persist($project);
         }
@@ -52,6 +99,8 @@ class AppFixtures extends Fixture
             $users[$i] = new User();
             $users[$i]->setFirstname($faker->firstName);
             $users[$i]->setLastname($faker->lastName);
+            $users[$i]->setEmail($faker->email);
+            $users[$i]->setTeam($team);
 
             $manager->persist($users[$i]);
         }
