@@ -20,6 +20,8 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+            remember_me:
+                secret: '%kernel.secret%'
             custom_authenticator: App\Security\FormLoginAuthenticator
             logout:
                 path: app_logout
