@@ -9,6 +9,8 @@ use Faker;
 
 class ProjetFixtures extends Fixture
 {
+    public const PROJET_REFERENCE = 'PROJET';
+
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -25,7 +27,10 @@ class ProjetFixtures extends Fixture
                 ->setBudget($this->getReference(BudgetFixtures::BUDGET_REFERENCE))
                 ->addCrucialFact($this->getReference(CrucialFactFixtures::CRUCIALFACT_REFERENCE));
 
+            $this->setReference(self::PROJET_REFERENCE, $project);
+
             $manager->persist($project);
+
 
         }
         $manager->flush();
