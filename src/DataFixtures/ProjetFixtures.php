@@ -21,8 +21,8 @@ class ProjetFixtures extends Fixture
 
         foreach(range(0, 20) as $i) {
             $project = (new Projet())
-                ->setTitle($faker->text(80))
-                ->setDescription($faker->realTextBetween($minNbChars = 200, $maxNbChars = 450, $indexSize = 2))
+                ->setTitle($faker->text(35))
+                ->setDescription($faker->realTextBetween($minNbChars = 120, $maxNbChars = 450, $indexSize = 2))
                 ->setEndedAt($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
                 ->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
                 ->setCode(['red', 'blue', 'green'][random_int(0,2)])
