@@ -38,8 +38,6 @@ class AppFixtures extends Fixture
 
             $manager->persist($portfolio[$i]);
         }
-        $portfolio = new Portfolio();
-        $portfolio->setName("Main Portfolio");
 
 
 
