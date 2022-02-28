@@ -4,10 +4,11 @@ namespace App\DataFixtures;
 
 use App\Entity\Status;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 
-class StatusFixtures extends Fixture
+class StatusFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -15,9 +16,17 @@ class StatusFixtures extends Fixture
             $status->setName('In progress');
             $status->setSlug('in-progress');
             $status->setValue(1);
+            $status->setColor('red');
 
             $manager->persist($status);
             $manager->flush();
 
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            ProjetFixtures::class,
+        ];
     }
 }

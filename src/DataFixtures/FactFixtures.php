@@ -10,6 +10,8 @@ use Faker;
 
 class FactFixtures extends Fixture
 {
+    public const FACT_REFERENCE = 'FACT';
+
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -18,6 +20,8 @@ class FactFixtures extends Fixture
             ->setName('Un fait vraiment marquant')
             ->setDescription('Une description cool')
             ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
+
+        $this->addReference(self::FACT_REFERENCE, $fact);
 
         $manager->persist($fact);
         $manager->flush();

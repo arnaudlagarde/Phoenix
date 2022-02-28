@@ -9,12 +9,15 @@ use Faker;
 
 class TeamFixtures extends Fixture
 {
+    public const TEAM_REFERENCE = 'Team-One';
+
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
 
         $team = (new Team())
             ->setName('team oe');
+        $this->addReference(self::TEAM_REFERENCE, $team);
 
         $manager->persist($team);
         $manager->flush();

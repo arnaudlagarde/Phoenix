@@ -10,6 +10,8 @@ use Faker;
 
 class CrucialFactFixtures extends Fixture
 {
+    public const CRUCIALFACT_REFERENCE = 'CrucialFact';
+
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
@@ -18,6 +20,8 @@ class CrucialFactFixtures extends Fixture
             ->setName('aaaa')
             ->setDescription('aaaaaaaaaaaaaaaaa')
             ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
+
+        $this->addReference(self::CRUCIALFACT_REFERENCE, $crucialFact);
 
         $manager->persist($crucialFact);
         $manager->flush();

@@ -19,9 +19,9 @@ class ProjetFixtures extends Fixture
             ->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
             ->setCode('red')
             ->setDone($faker->boolean)
-            ->setPortfolio()
-            ->setBudget()
-            ->addCrucialFact();
+            ->setPortfolio($this->getReference(PortfolioFixtures::Portfolio_REFERENCE))
+            ->setBudget($this->getReference(BudgetFixtures::BUDGET_REFERENCE))
+            ->addCrucialFact($this->getReference(CrucialFactFixtures::CRUCIALFACT_REFERENCE));
 
         $manager->persist($project);
         $manager->flush();
