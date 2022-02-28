@@ -16,16 +16,18 @@ class RiskFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        $risk = (new Risk())
-            ->setName('testrisk')
-            ->setCritical('testcritical')
-            ->setProbability(1)
-            ->setIdentificationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
-            ->setResolutionDate($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
+        foreach(range(0, 5) as $i) {
+            $risk = (new Risk())
+                ->setName('testrisk')
+                ->setCritical('testcritical')
+                ->setProbability(1)
+                ->setIdentificationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
+                ->setResolutionDate($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
 
-        $this->addReference(self::RISK_REFERENCE, $risk);
+            $this->setReference(self::RISK_REFERENCE, $risk);
 
-        $manager->persist($risk);
+            $manager->persist($risk);
+        }
         $manager->flush();
     }
 }

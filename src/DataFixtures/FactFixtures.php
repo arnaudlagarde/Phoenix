@@ -21,7 +21,7 @@ class FactFixtures extends Fixture
             ->setDescription('Une description cool')
             ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
 
-        $this->addReference(self::FACT_REFERENCE, $fact);
+        $this->setReference(self::FACT_REFERENCE, $fact);
 
         $manager->persist($fact);
         $manager->flush();

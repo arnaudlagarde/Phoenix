@@ -21,7 +21,7 @@ class CrucialFactFixtures extends Fixture
             ->setDescription('aaaaaaaaaaaaaaaaa')
             ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
 
-        $this->addReference(self::CRUCIALFACT_REFERENCE, $crucialFact);
+        $this->setReference(self::CRUCIALFACT_REFERENCE, $crucialFact);
 
         $manager->persist($crucialFact);
         $manager->flush();

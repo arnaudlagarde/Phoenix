@@ -17,7 +17,7 @@ class TeamFixtures extends Fixture
 
         $team = (new Team())
             ->setName('team oe');
-        $this->addReference(self::TEAM_REFERENCE, $team);
+        $this->setReference(self::TEAM_REFERENCE, $team);
 
         $manager->persist($team);
         $manager->flush();

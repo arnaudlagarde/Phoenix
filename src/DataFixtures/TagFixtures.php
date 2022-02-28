@@ -20,7 +20,7 @@ class TagFixtures extends Fixture
             ->setValue(1)
             ->setMandatory(1);
 
-        $this->addReference(self::TAG_REFERENCE, $tag);
+        $this->setReference(self::TAG_REFERENCE, $tag);
 
         $manager->persist($tag);
         $manager->flush();
