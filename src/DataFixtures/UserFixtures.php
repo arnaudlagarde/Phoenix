@@ -18,9 +18,10 @@ class UserFixtures extends Fixture
             $users[$i]->setFirstname($faker->firstName);
             $users[$i]->setLastname($faker->lastName);
             $users[$i]->setEmail($faker->email);
-            $users[$i]->setTeam($team);
+            $users[$i]->getTeam();
 
             $manager->persist($users[$i]);
+            $manager->flush();
         }
     }
 }

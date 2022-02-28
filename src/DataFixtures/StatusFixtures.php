@@ -17,6 +17,7 @@ class StatusFixtures extends Fixture
             $status->setValue(1);
 
             $manager->persist($status);
+            $manager->flush();
 
     }
 }

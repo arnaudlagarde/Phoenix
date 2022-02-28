@@ -16,6 +16,7 @@ class PortfolioFixtures extends Fixture
             $portfolio[$i]->setName('Mon portfolio n°'. $i);
 
             $manager->persist($portfolio[$i]);
+            $manager->flush();
         }
     }
 }

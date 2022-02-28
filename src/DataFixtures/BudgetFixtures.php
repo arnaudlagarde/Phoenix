@@ -21,6 +21,7 @@ class BudgetFixtures extends Fixture
             $budget->setRemainingBudget($budget->getInitialValue() - $budget->getConsumedValue());
 
             $manager->persist($budget);
+            $manager->flush();
         }
     }
 

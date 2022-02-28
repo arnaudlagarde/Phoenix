@@ -19,6 +19,7 @@ class CrucialFactFixtures extends Fixture
             ->setDescription('aaaaaaaaaaaaaaaaa')
             ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
 
-
+        $manager->persist($crucialFact);
+        $manager->flush();
     }
 }

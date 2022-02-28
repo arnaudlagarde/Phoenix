@@ -21,5 +21,8 @@ class RiskFixtures extends Fixture
             ->setIdentificationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
             ->setResolutionDate($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
             ->getProjet();
+
+        $manager->persist($risk);
+        $manager->flush();
     }
 }
