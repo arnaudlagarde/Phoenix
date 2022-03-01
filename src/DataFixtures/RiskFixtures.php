@@ -12,7 +12,7 @@ use PhpParser\Node\Stmt\Case_;
 
 class RiskFixtures extends Fixture
 {
-    public const RISK_REFERENCE = 'RISK';
+    public const RISK_REFERENCE = 'RISK_';
 
     /**
      * @throws Exception
@@ -24,7 +24,7 @@ class RiskFixtures extends Fixture
         foreach(range(0, 5) as $i) {
             $risk = (new Risk())
                 ->setName(['Low', 'Medium', 'High'][random_int(0,2)])
-                ->setProbability($faker->randomFloat(0))
+                ->setProbability($faker->randomFloat(2, 0, 100))
                 ->setIdentificationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
                 ->setResolutionDate($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
             $tqt = $risk->getName();
