@@ -10,7 +10,7 @@ use Faker;
 
 class ProjetFixtures extends Fixture
 {
-    public const PROJET_REFERENCE = 'PROJET';
+    public const PROJET_REFERENCE = 'PROJET_';
 
     /**
      * @throws Exception
@@ -26,11 +26,11 @@ class ProjetFixtures extends Fixture
                 ->setEndedAt($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
                 ->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
                 ->setCode(['red', 'blue', 'green'][random_int(0,2)])
-                ->setDone($faker->boolean);
-                ->setPortfolio($this->getReference(PortfolioFixtures::Portfolio_REFERENCE))
-                //->setBudget($this->getReference(BudgetFixtures::BUDGET_REFERENCE))
-                //->addCrucialFact($this->getReference(CrucialFactFixtures::CRUCIALFACT_REFERENCE));
-                //->setStatus($this->getReference(StatusFixtures::STATUS_REFERENCE));
+                ->setDone($faker->boolean)
+                ->setPortfolio($this->getReference(PortfolioFixtures::Portfolio_REFERENCE.$i))
+                ->setBudget($this->getReference(BudgetFixtures::BUDGET_REFERENCE.$i))
+                ->addCrucialFact($this->getReference(CrucialFactFixtures::CRUCIALFACT_REFERENCE.$i))
+                ->setStatus($this->getReference(StatusFixtures::STATUS_REFERENCE.$i));
 
             $this->setReference(self::PROJET_REFERENCE .$i, $project);
 

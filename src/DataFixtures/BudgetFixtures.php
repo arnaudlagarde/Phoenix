@@ -10,7 +10,7 @@ use Faker;
 
 class BudgetFixtures extends Fixture
 {
-    public const BUDGET_REFERENCE = 'BUDGET';
+    public const BUDGET_REFERENCE = 'BUDGET_';
 
     public function load(ObjectManager $manager): void
     {
@@ -19,8 +19,8 @@ class BudgetFixtures extends Fixture
         foreach(range(0, 20) as $i) {
             $budget = (new Budget())
                 ->setTurnoverBudget(1500)
-                ->setInitialValue($faker->randomFloat(111, 500, 100000))
-                ->setConsumedValue($faker->randomFloat(111, 1, 20000));
+                ->setInitialValue($faker->randomFloat(2, 9000, 20000))
+                ->setConsumedValue($faker->randomFloat(2, 1, 8000));
             $budget->setRemainingBudget($budget->getInitialValue() - $budget->getConsumedValue());
 
 

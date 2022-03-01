@@ -9,7 +9,7 @@ use Faker;
 
 class TeamFixtures extends Fixture
 {
-    public const TEAM_REFERENCE = 'Team-One';
+    public const TEAM_REFERENCE = 'Team_';
 
     public function load(ObjectManager $manager): void
     {

@@ -11,7 +11,7 @@ use Faker;
 
 class CrucialFactFixtures extends Fixture
 {
-    public const CRUCIALFACT_REFERENCE = 'CrucialFact';
+    public const CRUCIALFACT_REFERENCE = 'CrucialFact_';
 
     /**
      * @throws Exception

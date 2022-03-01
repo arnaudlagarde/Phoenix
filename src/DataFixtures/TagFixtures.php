@@ -10,7 +10,7 @@ use Faker;
 
 class TagFixtures extends Fixture
 {
-    public const TAG_REFERENCE = 'TAG';
+    public const TAG_REFERENCE = 'TAG_';
 
     /**
      * @throws Exception

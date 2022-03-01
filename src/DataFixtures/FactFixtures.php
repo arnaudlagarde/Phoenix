@@ -10,7 +10,7 @@ use Faker;
 
 class FactFixtures extends Fixture
 {
-    public const FACT_REFERENCE = 'FACT';
+    public const FACT_REFERENCE = 'FACT_';
 
     public function load(ObjectManager $manager): void
     {
