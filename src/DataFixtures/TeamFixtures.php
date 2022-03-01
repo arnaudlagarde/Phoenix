@@ -18,7 +18,7 @@ class TeamFixtures extends Fixture
         foreach (range(0, 2) as $i) {
             $team = (new Team())
                 ->setName('team n°' . $i);
-            $this->setReference(self::TEAM_REFERENCE, $team);
+            $this->setReference(self::TEAM_REFERENCE .$i, $team);
 
             $manager->persist($team);
         }

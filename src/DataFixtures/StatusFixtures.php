@@ -10,6 +10,8 @@ use Exception;
 
 class StatusFixtures extends Fixture
 {
+    //public const STATUS_REFERENCE = 'STATUS';
+
     /**
      * @throws Exception
      */
@@ -45,6 +47,8 @@ class StatusFixtures extends Fixture
                     $status->setSlug('created');
                     break;
             }
+
+            //$this->setReference(self::STATUS_REFERENCE, $status);
 
             $manager->persist($status);
         }

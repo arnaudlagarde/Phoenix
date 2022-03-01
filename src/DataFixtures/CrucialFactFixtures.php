@@ -39,7 +39,7 @@ class CrucialFactFixtures extends Fixture
                     break;
             }
 
-            $this->setReference(self::CRUCIALFACT_REFERENCE, $crucialFact);
+            $this->setReference(self::CRUCIALFACT_REFERENCE .$i, $crucialFact);
 
             $manager->persist($crucialFact);
         }

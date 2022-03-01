@@ -40,7 +40,7 @@ class RiskFixtures extends Fixture
                     break;
             }
 
-            $this->setReference(self::RISK_REFERENCE, $risk);
+            $this->setReference(self::RISK_REFERENCE .$i, $risk);
 
             $manager->persist($risk);
         }

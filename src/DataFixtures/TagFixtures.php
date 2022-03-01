@@ -24,7 +24,7 @@ class TagFixtures extends Fixture
                 ->setName('tag-' . $faker->randomNumber(5, 6))
                 ->setValue(random_int(0, 3))
                 ->setMandatory(random_int(0, 1));
-            $this->setReference(self::TAG_REFERENCE, $tag);
+            $this->setReference(self::TAG_REFERENCE .$i, $tag);
 
             $manager->persist($tag);
 

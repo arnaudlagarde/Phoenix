@@ -18,7 +18,7 @@ class PortfolioFixtures extends Fixture
             $portfolio[$i] = new Portfolio();
             $portfolio[$i]->setName('Mon portfolio n°' . $i);
 
-            $this->setReference(self::Portfolio_REFERENCE, $portfolio[$i]);
+            $this->setReference(self::Portfolio_REFERENCE .$i, $portfolio[$i]);
 
             $manager->persist($portfolio[$i]);
             $manager->flush();
