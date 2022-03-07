@@ -22,7 +22,7 @@ class CrucialFact
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
-    #[ORM\ManyToOne(targetEntity: Tag::class, inversedBy: 'crucialFacts')]
+    #[ORM\ManyToOne(targetEntity: Tag::class, inversedBy: 'CrucialFacts')]
     private $Tag;
 
     #[ORM\ManyToOne(targetEntity: Projet::class, inversedBy: 'CrucialFact')]

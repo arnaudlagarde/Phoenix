@@ -11,6 +11,7 @@ use Faker;
 class TagFixtures extends Fixture
 {
     public const TAG_REFERENCE = 'TAG_';
+    public const NUMBER_ELEMENT = 10;
 
     /**
      * @throws Exception

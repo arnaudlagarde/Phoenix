@@ -4,12 +4,13 @@ namespace App\DataFixtures;
 
 use App\Entity\CrucialFact;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Faker;
 
 
-class CrucialFactFixtures extends Fixture
+class CrucialFactFixtures extends Fixture  implements DependentFixtureInterface
 {
     public const CRUCIALFACT_REFERENCE = 'CrucialFact_';
 
@@ -23,7 +24,8 @@ class CrucialFactFixtures extends Fixture
         foreach (range(0, 5) as $i) {
             $crucialFact = (new CrucialFact())
                 ->setName(['This incredible thing happened !', 'Waouh cela est fou', 'Cela est marquant'][random_int(0, 2)])
-                ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
+                ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
+                ->setTag($this->getReference(TagFixtures::TAG_REFERENCE. rand(0, TagFixtures::NUMBER_ELEMENT)));
 
 
             $description = $crucialFact->getName();
@@ -44,5 +46,12 @@ class CrucialFactFixtures extends Fixture
             $manager->persist($crucialFact);
         }
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            TagFixtures::class
+        ];
     }
 }
