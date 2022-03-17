@@ -4,24 +4,32 @@ namespace App\DataFixtures;
 
 use App\Entity\Team;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
 
-class TeamFixtures extends Fixture
+class TeamFixtures extends Fixture implements DependentFixtureInterface
 {
     public const TEAM_REFERENCE = 'Team_';
 
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('fr_FR');
-
-        foreach (range(0, 2) as $i) {
+        foreach (range(0, 5) as $i) {
             $team = (new Team())
                 ->setName('team n°' . $i);
-            $this->setReference(self::TEAM_REFERENCE .$i, $team);
+
 
             $manager->persist($team);
+            $this->setReference(self::TEAM_REFERENCE . $i, $team);
         }
+
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            UserFixtures::class,
+        ];
     }
 }

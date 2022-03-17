@@ -24,8 +24,8 @@ class CrucialFactFixtures extends Fixture implements DependentFixtureInterface
         foreach (range(0, 5) as $i) {
             $crucialFact = (new CrucialFact())
                 ->setName(['This incredible thing happened !', 'Waouh cela est fou', 'Cela est marquant'][random_int(0, 2)])
-                ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
-                ->setMilestone($this->getReference(MilestoneFixtures::MILESTONE_REFERENCE. rand(0, MilestoneFixtures::NUMBER_ELEMENT)));
+                ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
+                //->setMilestone($this->getReference(MilestoneFixtures::MILESTONE_REFERENCE. rand(0, MilestoneFixtures::NUMBER_ELEMENT)));
 
 
             $description = $crucialFact->getName();

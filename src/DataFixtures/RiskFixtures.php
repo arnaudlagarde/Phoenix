@@ -4,13 +4,13 @@ namespace App\DataFixtures;
 
 use App\Entity\Risk;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Faker;
-use PhpParser\Node\Stmt\Case_;
 
 
-class RiskFixtures extends Fixture
+class RiskFixtures extends Fixture implements DependentFixtureInterface
 {
     public const RISK_REFERENCE = 'RISK_';
 
@@ -21,12 +21,13 @@ class RiskFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        foreach(range(0, 5) as $i) {
+        foreach (range(0, 5) as $i) {
             $risk = (new Risk())
-                ->setName(['Low', 'Medium', 'High'][random_int(0,2)])
+                ->setName(['Low', 'Medium', 'High'][random_int(0, 2)])
                 ->setProbability($faker->randomFloat(2, 0, 100))
                 ->setIdentificationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
                 ->setResolutionDate($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
+                //->setProject($this->getReference(self::PROJET_REFERENCE . $i));
             $tqt = $risk->getName();
             switch ($tqt) {
                 case 'Low':
@@ -40,12 +41,18 @@ class RiskFixtures extends Fixture
                     break;
             }
 
-            $this->setReference(self::RISK_REFERENCE .$i, $risk);
-
             $manager->persist($risk);
+            $this->setReference(self::RISK_REFERENCE . $i, $risk);
         }
 
 
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            ProjetFixtures::class,
+        ];
     }
 }
