@@ -22,8 +22,8 @@ class CrucialFact
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
-    #[ORM\ManyToOne(targetEntity: Tag::class, inversedBy: 'CrucialFacts')]
-    private $Tag;
+    #[ORM\ManyToOne(targetEntity: Milestone::class, inversedBy: 'CrucialFacts')]
+    private $Milestone;
 
     #[ORM\ManyToOne(targetEntity: Projet::class, inversedBy: 'CrucialFact')]
     private $projet;
@@ -69,14 +69,14 @@ class CrucialFact
         return $this;
     }
 
-    public function getTag(): ?Tag
+    public function getMilestone(): ?Milestone
     {
-        return $this->Tag;
+        return $this->Milestone;
     }
 
-    public function setTag(?Tag $Tag): self
+    public function setMilestone(?Milestone $Milestone): self
     {
-        $this->Tag = $Tag;
+        $this->Milestone = $Milestone;
 
         return $this;
     }

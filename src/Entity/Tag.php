@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TagRepository;
+use App\Repository\MilestoneRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TagRepository::class)]
-class Tag
+#[ORM\Entity(repositoryClass: MilestoneRepository::class)]
+class Milestone
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,7 +24,7 @@ class Tag
     #[ORM\Column(type: 'boolean')]
     private $Mandatory;
 
-    #[ORM\OneToMany(mappedBy: 'Tag', targetEntity: CrucialFact::class)]
+    #[ORM\OneToMany(mappedBy: 'Milestone', targetEntity: CrucialFact::class)]
     private $crucialFacts;
 
     public function __construct()
@@ -85,7 +85,7 @@ class Tag
     {
         if (!$this->crucialFacts->contains($crucialFact)) {
             $this->crucialFacts[] = $crucialFact;
-            $crucialFact->setTag($this);
+            $crucialFact->setMilestone($this);
         }
 
         return $this;
@@ -95,8 +95,8 @@ class Tag
     {
         if ($this->crucialFacts->removeElement($crucialFact)) {
             // set the owning side to null (unless already changed)
-            if ($crucialFact->getTag() === $this) {
-                $crucialFact->setTag(null);
+            if ($crucialFact->getMilestone() === $this) {
+                $crucialFact->setMilestone(null);
             }
         }
 

@@ -2,14 +2,14 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Tag;
+use App\Entity\Milestone;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-class TagCrudController extends AbstractCrudController
+class MilestoneCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Tag::class;
+        return Milestone::class;
     }
 
     /*

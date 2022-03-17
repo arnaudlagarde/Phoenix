@@ -20,8 +20,8 @@ final class Version20220222140838 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE crucial_fact (id INT AUTO_INCREMENT NOT NULL, tag_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, date_fact DATETIME NOT NULL, description LONGTEXT DEFAULT NULL, INDEX IDX_9E298F6BBAD26311 (tag_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE crucial_fact ADD CONSTRAINT FK_9E298F6BBAD26311 FOREIGN KEY (tag_id) REFERENCES tag (id)');
+        $this->addSql('CREATE TABLE crucial_fact (id INT AUTO_INCREMENT NOT NULL, milestone_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, date_fact DATETIME NOT NULL, description LONGTEXT DEFAULT NULL, INDEX IDX_9E298F6BBAD26311 (milestone_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('ALTER TABLE crucial_fact ADD CONSTRAINT FK_9E298F6BBAD26311 FOREIGN KEY (milestone_id) REFERENCES milestone (id)');
     }
 
     public function down(Schema $schema): void
@@ -34,7 +34,7 @@ final class Version20220222140838 extends AbstractMigration
         $this->addSql('ALTER TABLE projet CHANGE title title VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE description description LONGTEXT DEFAULT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE risk CHANGE name name VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE probability probability VARCHAR(255) DEFAULT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE status CHANGE name name VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE slug slug VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`');
-        $this->addSql('ALTER TABLE tag CHANGE name name VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`');
+        $this->addSql('ALTER TABLE milestone CHANGE name name VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`');
         $this->addSql('ALTER TABLE user CHANGE firstname firstname VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE lastname lastname VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE email email VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE password password VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`, CHANGE role role VARCHAR(255) NOT NULL COLLATE `utf8mb4_unicode_ci`');
     }
 }

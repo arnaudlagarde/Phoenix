@@ -2,13 +2,13 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Tag;
+use App\Entity\Milestone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Faker;
 
-class TagFixtures extends Fixture
+class MilestoneFixtures extends Fixture
 {
     public const TAG_REFERENCE = 'TAG_';
     public const NUMBER_ELEMENT = 10;
@@ -21,13 +21,13 @@ class TagFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
 
         foreach(range(0, 9) as $i) {
-            $tag = (new Tag())
-                ->setName('tag-' . $faker->randomNumber(5, 6))
+            $milestone = (new Milestone())
+                ->setName('milestone-' . $faker->randomNumber(5, 6))
                 ->setValue(random_int(0, 3))
                 ->setMandatory(random_int(0, 1));
-            $this->setReference(self::TAG_REFERENCE .$i, $tag);
+            $this->setReference(self::TAG_REFERENCE .$i, $milestone);
 
-            $manager->persist($tag);
+            $manager->persist($milestone);
 
             $manager->flush();
         }
