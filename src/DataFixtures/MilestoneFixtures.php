@@ -10,7 +10,7 @@ use Faker;
 
 class MilestoneFixtures extends Fixture
 {
-    public const TAG_REFERENCE = 'TAG_';
+    public const MILESTONE_REFERENCE = 'MILESTONE_';
     public const NUMBER_ELEMENT = 10;
 
     /**
@@ -25,7 +25,7 @@ class MilestoneFixtures extends Fixture
                 ->setName('milestone-' . $faker->randomNumber(5, 6))
                 ->setValue(random_int(0, 3))
                 ->setMandatory(random_int(0, 1));
-            $this->setReference(self::TAG_REFERENCE .$i, $milestone);
+            $this->setReference(self::MILESTONE_REFERENCE .$i, $milestone);
 
             $manager->persist($milestone);
 

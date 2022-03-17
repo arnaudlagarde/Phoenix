@@ -10,7 +10,7 @@ use Exception;
 use Faker;
 
 
-class CrucialFactFixtures extends Fixture  implements DependentFixtureInterface
+class CrucialFactFixtures extends Fixture implements DependentFixtureInterface
 {
     public const CRUCIALFACT_REFERENCE = 'CrucialFact_';
 
@@ -25,7 +25,7 @@ class CrucialFactFixtures extends Fixture  implements DependentFixtureInterface
             $crucialFact = (new CrucialFact())
                 ->setName(['This incredible thing happened !', 'Waouh cela est fou', 'Cela est marquant'][random_int(0, 2)])
                 ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
-                ->setMilestone($this->getReference(MilestoneFixtures::TAG_REFERENCE. rand(0, MilestoneFixtures::NUMBER_ELEMENT)));
+                ->setMilestone($this->getReference(MilestoneFixtures::MILESTONE_REFERENCE. rand(0, MilestoneFixtures::NUMBER_ELEMENT)));
 
 
             $description = $crucialFact->getName();
