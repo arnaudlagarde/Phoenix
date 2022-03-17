@@ -29,7 +29,8 @@ class MilestoneFixtures extends Fixture
 
             $manager->persist($milestone);
 
-            $manager->flush();
+
         }
+        $manager->flush();
     }
 }

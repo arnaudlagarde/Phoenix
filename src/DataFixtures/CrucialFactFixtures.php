@@ -45,6 +45,7 @@ class CrucialFactFixtures extends Fixture implements DependentFixtureInterface
 
             $manager->persist($crucialFact);
         }
+
         $manager->flush();
     }
 

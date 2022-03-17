@@ -17,6 +17,7 @@ class AdminFixtures extends Fixture
         $admin->setRoles((array)'ROLE_ADMIN');
 
         $manager->persist($admin);
+
         $manager->flush();
     }
 }

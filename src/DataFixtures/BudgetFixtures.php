@@ -23,12 +23,11 @@ class BudgetFixtures extends Fixture
                 ->setConsumedValue($faker->randomFloat(2, 1, 8000));
             $budget->setRemainingBudget($budget->getInitialValue() - $budget->getConsumedValue());
 
-
-            $this->setReference(self::BUDGET_REFERENCE .$i, $budget);
-
             $manager->persist($budget);
-            $manager->flush();
+            $this->setReference(self::BUDGET_REFERENCE .$i, $budget);
         }
+
+        $manager->flush();
     }
 
 }

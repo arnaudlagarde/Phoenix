@@ -44,6 +44,8 @@ class RiskFixtures extends Fixture
 
             $manager->persist($risk);
         }
+
+
         $manager->flush();
     }
 }

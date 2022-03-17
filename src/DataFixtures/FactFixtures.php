@@ -24,6 +24,8 @@ class FactFixtures extends Fixture
         $this->setReference(self::FACT_REFERENCE, $fact);
 
         $manager->persist($fact);
+
         $manager->flush();
+
     }
 }
