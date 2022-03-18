@@ -3,9 +3,7 @@
 {% block title %}Projet {{ project.id }}{% endblock %}
 
 {% block body %}
-    <a href="{{ path('app_register') }}"> Register </a> <br>
-    <a href="{{ path('app_login') }}"> Login </a> <br>
-    <a href="{{ path('admin') }}"> Admin </a> <br>
+    {% include 'base/nav.html.twig' %}
 
     <h1>Mon projet n°{{ project.id }}</h1>
     <h2>{{ project.title }}</h2>
