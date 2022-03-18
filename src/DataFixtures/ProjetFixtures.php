@@ -31,7 +31,6 @@ class ProjetFixtures extends Fixture implements DependentFixtureInterface
                 ->setCode(['red', 'blue', 'green'][random_int(0, 2)])
                 ->setDone($faker->boolean)
                 ->setBudget($this->getReference(BudgetFixtures::BUDGET_REFERENCE . $i))
-                //->addCrucialFact($this->getReference(CrucialFactFixtures::CRUCIALFACT_REFERENCE . $i))
                 //->setStatus($this->getReference(StatusFixtures::STATUS_REFERENCE.$i))
                 ->setPortfolio($this->getReference(PortfolioFixtures::Portfolio_REFERENCE . $portfolio));
 

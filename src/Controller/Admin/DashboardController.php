@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Budget;
-use App\Entity\CrucialFact;
 use App\Entity\Fact;
 use App\Entity\Portfolio;
 use App\Entity\Projet;
@@ -63,7 +62,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Risk', 'fa fa-meh-o', Risk::class);
         yield MenuItem::linkToCrud('Portfolio', 'fas fa-portrait', Portfolio::class);
         yield MenuItem::linkToCrud('Fact', 'fas fa-check-circle', Fact::class);
-        yield MenuItem::linkToCrud('CrucialFact', 'fas fa-check-square', CrucialFact::class);
         yield MenuItem::linkToCrud('Budget', 'fa fa-credit-card', Budget::class);
 
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);

@@ -40,9 +40,6 @@ class Projet
     #[ORM\ManyToOne(targetEntity: Budget::class, inversedBy: 'projets')]
     private $Budget;
 
-    #[ORM\OneToMany(mappedBy: 'projet', targetEntity: CrucialFact::class)]
-    private $CrucialFact;
-
     #[ORM\OneToMany(mappedBy: 'projet', targetEntity: Risk::class)]
     private $Risk;
 
@@ -51,7 +48,6 @@ class Projet
 
     public function __construct()
     {
-        $this->CrucialFact = new ArrayCollection();
         $this->Risk = new ArrayCollection();
     }
 
@@ -157,36 +153,6 @@ class Projet
     public function setBudget(?Budget $Budget): self
     {
         $this->Budget = $Budget;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CrucialFact[]
-     */
-    public function getCrucialFact(): Collection
-    {
-        return $this->CrucialFact;
-    }
-
-    public function addCrucialFact(CrucialFact $crucialFact): self
-    {
-        if (!$this->CrucialFact->contains($crucialFact)) {
-            $this->CrucialFact[] = $crucialFact;
-            $crucialFact->setProjet($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCrucialFact(CrucialFact $crucialFact): self
-    {
-        if ($this->CrucialFact->removeElement($crucialFact)) {
-            // set the owning side to null (unless already changed)
-            if ($crucialFact->getProjet() === $this) {
-                $crucialFact->setProjet(null);
-            }
-        }
 
         return $this;
     }

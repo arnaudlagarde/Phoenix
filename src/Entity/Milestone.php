@@ -24,14 +24,6 @@ class Milestone
     #[ORM\Column(type: 'boolean')]
     private $Mandatory;
 
-    #[ORM\OneToMany(mappedBy: 'Milestone', targetEntity: CrucialFact::class)]
-    private $crucialFacts;
-
-    public function __construct()
-    {
-        $this->crucialFacts = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -69,36 +61,6 @@ class Milestone
     public function setMandatory(bool $Mandatory): self
     {
         $this->Mandatory = $Mandatory;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CrucialFact[]
-     */
-    public function getCrucialFacts(): Collection
-    {
-        return $this->crucialFacts;
-    }
-
-    public function addCrucialFact(CrucialFact $crucialFact): self
-    {
-        if (!$this->crucialFacts->contains($crucialFact)) {
-            $this->crucialFacts[] = $crucialFact;
-            $crucialFact->setMilestone($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCrucialFact(CrucialFact $crucialFact): self
-    {
-        if ($this->crucialFacts->removeElement($crucialFact)) {
-            // set the owning side to null (unless already changed)
-            if ($crucialFact->getMilestone() === $this) {
-                $crucialFact->setMilestone(null);
-            }
-        }
 
         return $this;
     }
