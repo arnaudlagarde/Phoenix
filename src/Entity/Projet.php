@@ -46,6 +46,10 @@ class Projet
     #[ORM\Column(type: 'boolean')]
     private $Done;
 
+    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'Projet')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $team;
+
     public function __construct()
     {
         $this->Risk = new ArrayCollection();
@@ -195,6 +199,18 @@ class Projet
     public function setDone(bool $Done): self
     {
         $this->Done = $Done;
+
+        return $this;
+    }
+
+    public function getTeam(): ?Team
+    {
+        return $this->team;
+    }
+
+    public function setTeam(?Team $team): self
+    {
+        $this->team = $team;
 
         return $this;
     }

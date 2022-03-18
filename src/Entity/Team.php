@@ -27,10 +27,14 @@ class Team
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'LeadTeam')]
     private $team;
 
+    #[ORM\OneToMany(mappedBy: 'team', targetEntity: Projet::class)]
+    private $Projet;
+
     public function __construct()
     {
         $this->responsible = new ArrayCollection();
         $this->member = new ArrayCollection();
+        $this->Projet = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -118,6 +122,36 @@ class Team
     public function setTeam(?self $team): self
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Projet>
+     */
+    public function getProjet(): Collection
+    {
+        return $this->Projet;
+    }
+
+    public function addProjet(Projet $projet): self
+    {
+        if (!$this->Projet->contains($projet)) {
+            $this->Projet[] = $projet;
+            $projet->setTeam($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjet(Projet $projet): self
+    {
+        if ($this->Projet->removeElement($projet)) {
+            // set the owning side to null (unless already changed)
+            if ($projet->getTeam() === $this) {
+                $projet->setTeam(null);
+            }
+        }
 
         return $this;
     }

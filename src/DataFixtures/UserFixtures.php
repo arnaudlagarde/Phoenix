@@ -9,23 +9,40 @@ use Faker;
 
 class UserFixtures extends Fixture
 {
+    public const USER_REFERENCE = 'User_';
+
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
 
         // Users
-        for ($i = 0; $i < 15; $i++) {
-            $users[$i] = new User();
-            $users[$i]->setFirstname($faker->firstName);
-            $users[$i]->setLastname($faker->lastName);
-            $users[$i]->setEmail($faker->email);
-            $users[$i]->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC');
-            $users[$i]->setRole('ROLE_USER');
+        foreach (range(1, 20) as $i) {
+            $user = (new User())
+                ->setFirstname($faker->firstName)
+                ->setLastname($faker->lastName)
+                ->setEmail($faker->email)
+                ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
+                ->setRole('ROLE_USER');
 
 
-            $manager->persist($users[$i]);
+            $this->addReference(self::USER_REFERENCE . "user$i", $user);
+            $manager->persist($user);
 
         }
+        // Boss
+       /* foreach (range(1, 20) as $i) {
+            $user = (new User())
+                ->setFirstname($faker->firstName)
+                ->setLastname($faker->lastName)
+                ->setEmail("boss$i@gmail.com")
+                ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
+                ->setRole('ROLE_USER');
+
+
+            $this->addReference(self::class . "boss$i", $user);
+            $manager->persist($user);
+
+        }*/
 
         $manager->flush();
 

@@ -14,7 +14,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        foreach (range(0, 5) as $i) {
+        foreach (range(1, 8) as $i) {
             $team = (new Team())
                 ->setName('team n°' . $i);
 
