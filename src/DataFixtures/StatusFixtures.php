@@ -17,9 +17,9 @@ class StatusFixtures extends Fixture
      */
     public function load(ObjectManager $manager): void
     {
-        foreach (range(0, 30) as $i) {
+        foreach (range(0, 2) as $i) {
             $status = new Status();
-            $status->setName(['Done', 'In progress', 'Created'][random_int(0, 2)]);
+            $status->setName(['Done', 'In progress', 'Created'][$i]);
             $status->setValue(random_int(0, 3));
 
             $color = $status->getName();

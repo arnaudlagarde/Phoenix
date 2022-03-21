@@ -25,6 +25,7 @@ class ProjetFixtures extends Fixture implements DependentFixtureInterface
 
         foreach (range(1, 20) as $i) {
             $team = random_int(1, 8);
+            $status = random_int(0,2);
             $project = (new Projet())
                 ->setTitle("Projet n°$i")
                 ->setDescription($faker->realTextBetween($minNbChars = 120, $maxNbChars = 450, $indexSize = 2))
@@ -33,7 +34,7 @@ class ProjetFixtures extends Fixture implements DependentFixtureInterface
                 ->setCode(['red', 'blue', 'green'][random_int(0, 2)])
                 ->setDone($faker->boolean)
                 ->setBudget($this->getReference(BudgetFixtures::BUDGET_REFERENCE . $i))
-                ->setStatus($this->getReference(StatusFixtures::STATUS_REFERENCE.$i))
+                ->setStatus($this->getReference(StatusFixtures::STATUS_REFERENCE.$status))
                 ->setPortfolio($this->getReference(PortfolioFixtures::Portfolio_REFERENCE . $portfolio))
                 ->setTeam($this->getReference(TeamFixtures::TEAM_REFERENCE.$team));
 
