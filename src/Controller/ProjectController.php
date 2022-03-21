@@ -13,7 +13,7 @@ class ProjectController extends AbstractController
     #[Route('/', name: 'app_homepage')]
     public function index(ProjetRepository $projetRepository): Response
     {
-        return $this->render('project/index.html.twig', [
+        return $this->render('project/dashboard.html.twig', [
             'projects' => $projetRepository->findAll(),
         ]);
     }
@@ -23,6 +23,13 @@ class ProjectController extends AbstractController
         return $this->render('project/show.html.twig', [
             'project' => $project,
 
+        ]);
+    }
+    #[Route('/projects', name: 'app_projects')]
+    public function projects(ProjetRepository $projetRepository): Response
+    {
+        return $this->render('project/projects.html.twig', [
+            'projects' => $projetRepository->findAll(),
         ]);
     }
 }
