@@ -79,6 +79,9 @@
                         </a>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    {{ knp_pagination_render(projects) }}
+                </div>
             </div>
         </div>
 
@@ -137,7 +140,7 @@
             <h2><i class="fa-solid fa-calendar"></i> Derniers jalons majeurs</h2>
         </div>
     </div>
-    </div>
+
 
     {% include 'base/footer.html.twig' %}
 {% endblock %}

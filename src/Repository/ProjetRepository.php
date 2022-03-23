@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Projet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,6 +41,15 @@ class ProjetRepository extends ServiceEntityRepository
             ->andWhere()
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @return Query
+     */
+    public function getProjet(): Query
+    {
+        return $this->createQueryBuilder('p')
+            ->getQuery();
     }
 
     // /**

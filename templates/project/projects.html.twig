@@ -37,6 +37,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        {{ knp_pagination_render(projects) }}
+    </div>
 
     {% include 'base/footer.html.twig' %}
 {% endblock %}
