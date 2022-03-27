@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Projet;
+use App\Repository\FactRepository;
+use App\Repository\MilestoneRepository;
 use App\Repository\ProjetRepository;
 use App\Repository\StatusRepository;
 use Knp\Component\Pager\PaginatorInterface;
@@ -14,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjectController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
-    public function index(ProjetRepository $projetRepository, StatusRepository $statusRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(ProjetRepository $projetRepository, StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $query = $projetRepository->getProjet();
 
@@ -25,7 +27,9 @@ class ProjectController extends AbstractController
         );
         return $this->render('project/dashboard.html.twig', [
             'projects' => $projects,
-            'status' => $statusRepository->findAll()
+            'status' => $statusRepository->findAll(),
+            'milestones' => $milestoneRepository->findAll(),
+            'facts' => $factRepository->findAll()
             //'count' => $projetRepository->projectStatus()
         ]);
     }
