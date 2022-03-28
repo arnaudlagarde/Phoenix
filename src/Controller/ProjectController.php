@@ -18,18 +18,30 @@ class ProjectController extends AbstractController
     #[Route('/', name: 'app_homepage')]
     public function index(ProjetRepository $projetRepository, StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $query = $projetRepository->getProjet();
+        $queryProjects = $projetRepository->getProjet();
+        $queryFacts = $factRepository->getFact();
+        $queryMilestones = $milestoneRepository->getMilestone();
 
         $projects = $paginator->paginate(
-            $query,
+            $queryProjects,
+            $request->query->get('page', 1),
+            8
+        );
+        $facts = $paginator->paginate(
+            $queryFacts,
+            $request->query->get('page', 1),
+            9
+        );
+        $milestones = $paginator->paginate(
+            $queryMilestones,
             $request->query->get('page', 1),
             8
         );
         return $this->render('project/dashboard.html.twig', [
             'projects' => $projects,
             'status' => $statusRepository->findAll(),
-            'milestones' => $milestoneRepository->findAll(),
-            'facts' => $factRepository->findAll()
+            'milestones' => $milestones,
+            'facts' => $facts
             //'count' => $projetRepository->projectStatus()
         ]);
     }

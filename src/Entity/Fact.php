@@ -22,6 +22,10 @@ class Fact
     #[ORM\Column(type: 'string', length: 255)]
     private $description;
 
+    #[ORM\ManyToOne(targetEntity: milestone::class, inversedBy: 'facts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $Milestone;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class Fact
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getMilestone(): ?milestone
+    {
+        return $this->Milestone;
+    }
+
+    public function setMilestone(?milestone $Milestone): self
+    {
+        $this->Milestone = $Milestone;
 
         return $this;
     }

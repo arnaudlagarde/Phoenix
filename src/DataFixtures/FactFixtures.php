@@ -3,12 +3,14 @@
 namespace App\DataFixtures;
 
 use App\Entity\Fact;
+use App\Repository\MilestoneRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
 
 
-class FactFixtures extends Fixture
+class FactFixtures extends Fixture implements DependentFixtureInterface
 {
     public const FACT_REFERENCE = 'FACT_';
 
@@ -16,16 +18,28 @@ class FactFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        $fact = (new Fact())
-            ->setName('Un fait vraiment marquant')
-            ->setDescription('Une description cool')
-            ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
+        foreach (range(1, 20) as $i) {
+            $fact = (new Fact())
+                ->setName('Un fait vraiment marquant')
+                ->setDescription('Une description cool')
+                ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
+                ->setMilestone($this->getReference(MilestoneFixtures::MILESTONE_REFERENCE . $i));
 
-        $this->setReference(self::FACT_REFERENCE, $fact);
 
-        $manager->persist($fact);
+            $this->setReference(self::FACT_REFERENCE, $fact);
+
+            $manager->persist($fact);
+
+        }
 
         $manager->flush();
 
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            MilestoneFixtures::class
+        ];
     }
 }

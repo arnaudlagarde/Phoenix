@@ -20,7 +20,7 @@ class MilestoneFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        foreach (range(0, 9) as $i) {
+        foreach (range(0, 30) as $i) {
             $milestone = (new Milestone())
                 ->setName('milestone-' . $faker->randomNumber(5, 6))
                 ->setValue(random_int(0, 3))

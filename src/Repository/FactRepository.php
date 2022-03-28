@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Fact;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +18,14 @@ class FactRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Fact::class);
+    }
+    /**
+     * @return Query
+     */
+    public function getFact(): Query
+    {
+        return $this->createQueryBuilder('f')
+            ->getQuery();
     }
 
     // /**

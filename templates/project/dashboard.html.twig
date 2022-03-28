@@ -9,7 +9,7 @@
     <div class="container-fluid">
         <h1>Tableau de bord</h1>
         <div class="row">
-            <div class="col-6">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
@@ -41,16 +41,19 @@
                                     </tr>
                                 {% else %}
                                     <tr>
-                                        <td colspan="4" align="center">Aucun Projet trouvé</td>
+                                        <td colspan="4" align="center">Aucun Fait trouvé</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            <div class="d-flex justify-content-center">
+                                {{ knp_pagination_render(facts, 'base/pagination.html.twig') }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
@@ -109,7 +112,7 @@
 
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <h2><i class="fa-regular fa-pen-to-square"></i> Derniers projets mis à jour</h2>
                 <ul>
                     <li>
@@ -120,12 +123,12 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-6">
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6">
                 <h2><i class="fa-solid fa-clock"></i> Projets prévus</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <h2><i class="fa-solid fa-folder"></i> Nombre de projets par statut</h2>
                 {% for status in status %}
                     <ul>
@@ -139,9 +142,6 @@
                     </tr>
                 {% endfor %}
 
-            </div>
-            <div class="col-6">
-                <h2><i class="fa-regular fa-newspaper"></i> Derniers articles publiés</h2>
             </div>
         </div>
 
@@ -178,6 +178,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                    {{ knp_pagination_render(milestones, 'base/pagination.html.twig') }}
+                </div>
             </div>
         </div>
     </div>
