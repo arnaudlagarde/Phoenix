@@ -20,8 +20,8 @@ class FactFixtures extends Fixture implements DependentFixtureInterface
 
         foreach (range(1, 20) as $i) {
             $fact = (new Fact())
-                ->setName('Un fait vraiment marquant')
-                ->setDescription('Une description cool')
+                ->setName($faker->text(50))
+                ->setDescription($faker->text(100))
                 ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
                 ->setMilestone($this->getReference(MilestoneFixtures::MILESTONE_REFERENCE . $i));
 

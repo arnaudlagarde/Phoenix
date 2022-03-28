@@ -22,7 +22,7 @@ class Fact
     #[ORM\Column(type: 'string', length: 255)]
     private $description;
 
-    #[ORM\ManyToOne(targetEntity: milestone::class, inversedBy: 'facts')]
+    #[ORM\ManyToOne(targetEntity: Milestone::class, inversedBy: 'facts')]
     #[ORM\JoinColumn(nullable: false)]
     private $Milestone;
 
@@ -67,12 +67,12 @@ class Fact
         return $this;
     }
 
-    public function getMilestone(): ?milestone
+    public function getMilestone(): ?Milestone
     {
         return $this->Milestone;
     }
 
-    public function setMilestone(?milestone $Milestone): self
+    public function setMilestone(?Milestone $Milestone): self
     {
         $this->Milestone = $Milestone;
 

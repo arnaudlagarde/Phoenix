@@ -19,32 +19,32 @@ class StatusFixtures extends Fixture
     {
         foreach (range(0, 2) as $i) {
             $status = new Status();
-            $status->setName(['Done', 'In progress', 'Created'][$i]);
+            $status->setName(['Terminé', 'En cours', 'Prévu'][$i]);
             $status->setValue(random_int(0, 3));
 
             $color = $status->getName();
             switch ($color) {
-                case 'Done':
+                case 'Terminé':
                     $status->setColor('green');
                     break;
-                case 'In progress':
+                case 'En cours':
                     $status->setColor('yellow');
                     break;
-                case 'Created':
+                case 'Prévu':
                     $status->setColor('blue');
                     break;
             }
 
             $name = $status->getName();
             switch ($name) {
-                case 'Done':
-                    $status->setSlug('done');
+                case 'Terminé':
+                    $status->setSlug('Terminé');
                     break;
-                case 'In progress':
-                    $status->setSlug('in-progress');
+                case 'En cours':
+                    $status->setSlug('En-Cours');
                     break;
-                case 'Created':
-                    $status->setSlug('created');
+                case 'Prévu':
+                    $status->setSlug('Prévu');
                     break;
             }
 

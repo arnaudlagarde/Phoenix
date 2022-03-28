@@ -24,7 +24,7 @@ class Status
     #[ORM\Column(type: 'integer')]
     private $value;
 
-    #[ORM\OneToMany(mappedBy: 'status', targetEntity: projet::class)]
+    #[ORM\OneToMany(mappedBy: 'status', targetEntity: Projet::class)]
     private $projet;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -84,17 +84,17 @@ class Status
         return $this->projet;
     }
 
-    public function addProjet(projet $projet): self
+    public function addProjet(Projet $projet): self
     {
-        if (!$this->projet->contains($projet)) {
-            $this->projet[] = $projet;
+        if (!$this->Projet->contains($projet)) {
+            $this->Projet[] = $projet;
             $projet->setStatus($this);
         }
 
         return $this;
     }
 
-    public function removeProjet(projet $projet): self
+    public function removeProjet(Projet $projet): self
     {
         if ($this->projet->removeElement($projet)) {
             // set the owning side to null (unless already changed)
