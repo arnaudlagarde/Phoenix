@@ -13,38 +13,48 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $faker = Faker\Factory::create('fr_FR');
+        $faker = \Faker\Factory::create('fr_FR');
+
+        // Root
+        $root = (new User())
+            ->setEmail('root@phoenix.com')
+            ->setFirstName('Phoenix')
+            ->setLastName('Grégoire')
+            ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
+            ->setRole('ROLE_USER')
+        ;
+
+        $this->addReference(self::class.'root', $root);
+        $manager->persist($root);
 
         // Users
         foreach (range(1, 20) as $i) {
             $user = (new User())
-                ->setFirstname($faker->firstName)
-                ->setLastname($faker->lastName)
-                ->setEmail($faker->email)
+                ->setEmail($faker->unique()->safeEmail())
+                ->setFirstName($faker->firstName())
+                ->setLastName($faker->lastName())
                 ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
-                ->setRole('ROLE_USER');
+                ->setRole('ROLE_USER')
+            ;
 
-
-            $this->addReference(self::USER_REFERENCE . "user$i", $user);
+            $this->addReference(self::class."user$i", $user);
             $manager->persist($user);
-
         }
-        // Boss
-       /* foreach (range(1, 20) as $i) {
+
+        // Responsibles
+        foreach (range(1, 10) as $i) {
             $user = (new User())
-                ->setFirstname($faker->firstName)
-                ->setLastname($faker->lastName)
-                ->setEmail("boss$i@gmail.com")
+                ->setEmail($faker->unique()->safeEmail())
+                ->setFirstName($faker->firstName())
+                ->setLastName($faker->lastName())
                 ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
-                ->setRole('ROLE_USER');
+                ->setRole('ROLE_USER')
+            ;
 
-
-            $this->addReference(self::class . "boss$i", $user);
+            $this->addReference(self::class."responsible$i", $user);
             $manager->persist($user);
-
-        }*/
+        }
 
         $manager->flush();
-
     }
 }

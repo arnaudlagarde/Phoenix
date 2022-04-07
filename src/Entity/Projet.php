@@ -50,9 +50,13 @@ class Projet
     #[ORM\JoinColumn(nullable: false)]
     private $team;
 
+    #[ORM\OneToMany(mappedBy: 'projet', targetEntity: Fact::class)]
+    private $Fact;
+
     public function __construct()
     {
         $this->Risk = new ArrayCollection();
+        $this->Fact = new ArrayCollection();
     }
 
     #[Pure] public function __toString(): string
@@ -211,6 +215,36 @@ class Projet
     public function setTeam(?Team $team): self
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Fact>
+     */
+    public function getFact(): Collection
+    {
+        return $this->Fact;
+    }
+
+    public function addFact(Fact $fact): self
+    {
+        if (!$this->Fact->contains($fact)) {
+            $this->Fact[] = $fact;
+            $fact->setProjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFact(Fact $fact): self
+    {
+        if ($this->Fact->removeElement($fact)) {
+            // set the owning side to null (unless already changed)
+            if ($fact->getProjet() === $this) {
+                $fact->setProjet(null);
+            }
+        }
 
         return $this;
     }

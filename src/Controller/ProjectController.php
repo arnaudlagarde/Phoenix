@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Fact;
 use App\Entity\Projet;
 use App\Repository\FactRepository;
 use App\Repository\MilestoneRepository;
@@ -67,6 +68,14 @@ class ProjectController extends AbstractController
         );
         return $this->render('project/projects.html.twig', [
             'projects' => $projects
+        ]);
+    }
+    #[Route('/fact/{id}', name: 'app_show_fact')]
+    public function showFact(Fact $fact): Response
+    {
+        return $this->render('project/show.html.twig', [
+            'fact' => $fact,
+
         ]);
     }
 }

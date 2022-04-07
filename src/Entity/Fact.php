@@ -26,6 +26,9 @@ class Fact
     #[ORM\JoinColumn(nullable: false)]
     private $Milestone;
 
+    #[ORM\ManyToOne(targetEntity: Projet::class, inversedBy: 'Fact')]
+    private $projet;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Fact
     public function setMilestone(?Milestone $Milestone): self
     {
         $this->Milestone = $Milestone;
+
+        return $this;
+    }
+
+    public function getProjet(): ?Projet
+    {
+        return $this->projet;
+    }
+
+    public function setProjet(?Projet $projet): self
+    {
+        $this->projet = $projet;
 
         return $this;
     }

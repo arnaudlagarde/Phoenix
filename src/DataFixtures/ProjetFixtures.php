@@ -20,10 +20,7 @@ class ProjetFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        $portfolio = 1;
-
-
-        foreach (range(1, 20) as $i) {
+        foreach (range(0, 15) as $i) {
             $team = random_int(1, 8);
             $status = random_int(0,2);
             $project = (new Projet())
@@ -32,16 +29,12 @@ class ProjetFixtures extends Fixture implements DependentFixtureInterface
                 ->setEndedAt($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
                 ->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
                 ->setCode(['red', 'blue', 'green'][random_int(0, 2)])
-                ->setDone($faker->boolean)
+                ->setDone($faker->boolean(20))
                 ->setBudget($this->getReference(BudgetFixtures::BUDGET_REFERENCE . $i))
                 ->setStatus($this->getReference(StatusFixtures::STATUS_REFERENCE.$status))
-                ->setPortfolio($this->getReference(PortfolioFixtures::Portfolio_REFERENCE . $portfolio))
                 ->setTeam($this->getReference(TeamFixtures::TEAM_REFERENCE.$team));
 
 
-            if (0 !== $portfolio % 2) {
-                ++$portfolio;
-            }
 
             $this->setReference(self::PROJET_REFERENCE . $i, $project);
 
@@ -55,7 +48,6 @@ class ProjetFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             StatusFixtures::class,
-            PortfolioFixtures::class,
             TeamFixtures::class,
             BudgetFixtures::class,
         ];
