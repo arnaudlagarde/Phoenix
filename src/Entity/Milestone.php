@@ -27,6 +27,9 @@ class Milestone
     #[ORM\OneToMany(mappedBy: 'Milestone', targetEntity: Fact::class)]
     private $facts;
 
+    #[ORM\ManyToOne(targetEntity: Projet::class, inversedBy: 'Milestone')]
+    private $projet;
+
     public function __construct()
     {
         $this->facts = new ArrayCollection();
@@ -99,6 +102,18 @@ class Milestone
                 $fact->setMilestone(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProjet(): ?Projet
+    {
+        return $this->projet;
+    }
+
+    public function setProjet(?Projet $projet): self
+    {
+        $this->projet = $projet;
 
         return $this;
     }

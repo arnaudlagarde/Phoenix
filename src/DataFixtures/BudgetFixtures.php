@@ -16,7 +16,7 @@ class BudgetFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        foreach(range(0, 20) as $i) {
+        foreach(range(0, 30) as $i) {
             $budget = (new Budget())
                 ->setTurnoverBudget(1500)
                 ->setInitialValue($faker->randomFloat(2, 9000, 20000))

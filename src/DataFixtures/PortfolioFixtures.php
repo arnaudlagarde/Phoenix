@@ -16,19 +16,22 @@ class PortfolioFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         foreach (range(1, 6) as $i) {
-            $portfolio[$i] = new Portfolio();
-            $portfolio[$i]->setName('Mon portfolio n°' . $i);
+            $portfolio = (new Portfolio())
+                ->setName('Mon portfolio n°' . $i)
+                ->setResponsible($this->getReference(UserFixtures::class . "responsible$i"));
 
-            $this->setReference(self::Portfolio_REFERENCE . $i, $portfolio[$i]);
-            $manager->persist($portfolio[$i]);
+            $this->setReference(self::Portfolio_REFERENCE . $i, $portfolio);
+            $manager->persist($portfolio);
 
         }
         $manager->flush();
     }
+
     public function getDependencies(): array
     {
         return [
             UserFixtures::class,
+            ProjetFixtures::class,
         ];
     }
 }

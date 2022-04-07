@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -30,6 +32,14 @@ class User
 
     #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: 'responsible')]
     private $team;
+
+    #[ORM\OneToMany(mappedBy: 'Responsible', targetEntity: Portfolio::class)]
+    private $portfolios;
+
+    public function __construct()
+    {
+        $this->portfolios = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +114,36 @@ class User
     public function setTeam(?Team $team): self
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Portfolio>
+     */
+    public function getPortfolios(): Collection
+    {
+        return $this->portfolios;
+    }
+
+    public function addPortfolio(Portfolio $portfolio): self
+    {
+        if (!$this->portfolios->contains($portfolio)) {
+            $this->portfolios[] = $portfolio;
+            $portfolio->setResponsible($this);
+        }
+
+        return $this;
+    }
+
+    public function removePortfolio(Portfolio $portfolio): self
+    {
+        if ($this->portfolios->removeElement($portfolio)) {
+            // set the owning side to null (unless already changed)
+            if ($portfolio->getResponsible() === $this) {
+                $portfolio->setResponsible(null);
+            }
+        }
 
         return $this;
     }

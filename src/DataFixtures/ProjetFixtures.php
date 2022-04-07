@@ -20,7 +20,7 @@ class ProjetFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        foreach (range(0, 15) as $i) {
+        foreach (range(1, 30) as $i) {
             $team = random_int(1, 8);
             $status = random_int(0,2);
             $project = (new Projet())

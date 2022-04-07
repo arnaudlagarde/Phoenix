@@ -53,10 +53,14 @@ class Projet
     #[ORM\OneToMany(mappedBy: 'projet', targetEntity: Fact::class)]
     private $Fact;
 
+    #[ORM\OneToMany(mappedBy: 'projet', targetEntity: Milestone::class)]
+    private $Milestone;
+
     public function __construct()
     {
         $this->Risk = new ArrayCollection();
         $this->Fact = new ArrayCollection();
+        $this->Milestone = new ArrayCollection();
     }
 
     #[Pure] public function __toString(): string
@@ -243,6 +247,36 @@ class Projet
             // set the owning side to null (unless already changed)
             if ($fact->getProjet() === $this) {
                 $fact->setProjet(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Milestone>
+     */
+    public function getMilestone(): Collection
+    {
+        return $this->Milestone;
+    }
+
+    public function addMilestone(Milestone $milestone): self
+    {
+        if (!$this->Milestone->contains($milestone)) {
+            $this->Milestone[] = $milestone;
+            $milestone->setProjet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMilestone(Milestone $milestone): self
+    {
+        if ($this->Milestone->removeElement($milestone)) {
+            // set the owning side to null (unless already changed)
+            if ($milestone->getProjet() === $this) {
+                $milestone->setProjet(null);
             }
         }
 

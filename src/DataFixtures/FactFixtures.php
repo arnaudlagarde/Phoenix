@@ -19,11 +19,13 @@ class FactFixtures extends Fixture implements DependentFixtureInterface
         $faker = Faker\Factory::create('fr_FR');
 
         foreach (range(1, 20) as $i) {
+
             $fact = (new Fact())
                 ->setName($faker->text(50))
                 ->setDescription($faker->text(100))
                 ->setDateFact($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
-                ->setMilestone($this->getReference(MilestoneFixtures::MILESTONE_REFERENCE . $i));
+                ->setMilestone($this->getReference(MilestoneFixtures::MILESTONE_REFERENCE . $i))
+                ->setProjet($this->getReference(ProjetFixtures::PROJET_REFERENCE . $i));
 
 
             $this->setReference(self::FACT_REFERENCE, $fact);
@@ -39,7 +41,8 @@ class FactFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            MilestoneFixtures::class
+            MilestoneFixtures::class,
+            ProjetFixtures::class,
         ];
     }
 }

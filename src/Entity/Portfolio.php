@@ -21,6 +21,10 @@ class Portfolio
     #[ORM\OneToMany(mappedBy: 'portfolio', targetEntity: Projet::class)]
     private $Projet;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'portfolios')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $Responsible;
+
     public function __construct()
     {
         $this->Projet = new ArrayCollection();
@@ -69,6 +73,18 @@ class Portfolio
                 $projet->setPortfolio(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getResponsible(): ?User
+    {
+        return $this->Responsible;
+    }
+
+    public function setResponsible(?User $Responsible): self
+    {
+        $this->Responsible = $Responsible;
 
         return $this;
     }

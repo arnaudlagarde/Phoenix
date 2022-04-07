@@ -4,11 +4,12 @@ namespace App\DataFixtures;
 
 use App\Entity\Milestone;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
 use Faker;
 
-class MilestoneFixtures extends Fixture
+class MilestoneFixtures extends Fixture implements DependentFixtureInterface
 {
     public const MILESTONE_REFERENCE = 'MILESTONE_';
     public const NUMBER_ELEMENT = 10;
@@ -20,11 +21,12 @@ class MilestoneFixtures extends Fixture
     {
         $faker = Faker\Factory::create('fr_FR');
 
-        foreach (range(0, 30) as $i) {
+        foreach (range(1, 30) as $i) {
             $milestone = (new Milestone())
                 ->setName('milestone-' . $faker->randomNumber(5, 6))
                 ->setValue(random_int(0, 3))
-                ->setMandatory(random_int(0, 1));
+                ->setMandatory($faker->boolean())
+                ->setProjet($this->getReference(ProjetFixtures::PROJET_REFERENCE . $i));
 
 
             $this->setReference(self::MILESTONE_REFERENCE . $i, $milestone);
@@ -33,5 +35,12 @@ class MilestoneFixtures extends Fixture
 
         }
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            ProjetFixtures::class,
+        ];
     }
 }
