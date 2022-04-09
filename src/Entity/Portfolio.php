@@ -25,6 +25,9 @@ class Portfolio
     #[ORM\JoinColumn(nullable: false)]
     private $Responsible;
 
+    #[ORM\ManyToOne(targetEntity: Admin::class, inversedBy: 'portfolios')]
+    private $Boss;
+
     public function __construct()
     {
         $this->Projet = new ArrayCollection();
@@ -85,6 +88,18 @@ class Portfolio
     public function setResponsible(?User $Responsible): self
     {
         $this->Responsible = $Responsible;
+
+        return $this;
+    }
+
+    public function getBoss(): ?Admin
+    {
+        return $this->Boss;
+    }
+
+    public function setBoss(?Admin $Boss): self
+    {
+        $this->Boss = $Boss;
 
         return $this;
     }

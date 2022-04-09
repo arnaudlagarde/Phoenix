@@ -7,7 +7,6 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="{{ path("app_homepage") }}"><i class="fa-solid fa-house"></i>Tableau de bord</a>
@@ -16,7 +15,7 @@
                         <a class="nav-link" href="{{ path("app_projects") }}"> Projets</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("app_register") }}">Login</a>
+                        <a class="nav-link" href="{{ path("app_login") }}">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path("app_register") }}">Register</a>
@@ -25,7 +24,6 @@
                         <a class="nav-link" href="{{ path("admin") }}">Admin</a>
                     </li>
                 </ul>
-            </div>
         </div>
     </nav>
 {% endblock %}
