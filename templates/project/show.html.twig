@@ -11,4 +11,54 @@
     <small>crée le {{ project.startDate | date('d/m/Y') }}</small> <br>
     <small>terminé le {{ project.endedAt | date('d/m/Y') }}</small>
 
+    <h2> Les risques</h2>
+
+    <table class="table table-striped table-middle-aligned">
+        <thead>
+        <tr>
+            <th scope="col">Titre</th>
+            <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Commencé le</th>
+            <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Fini le</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for risk in risks %}
+            <tr>
+                <td>{{ risk.name }}</td>
+                <td>{{ risk.IdentificationDate | date('d/m/Y') }}</td>
+                <td>{{ risk.ResolutionDate | date('d/m/Y') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" align="center">Aucun risque trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <h2> Les budgets</h2>
+
+    <table class="table table-striped table-middle-aligned">
+        <thead>
+        <tr>
+            <th scope="col">Titre</th>
+            <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Commencé le</th>
+            <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Fini le</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for budget in budgets %}
+            <tr>
+                <td>{{ budget.initialValue }}</td>
+                <td>{{ budget.consumedValue }}</td>
+                <td>{{ budget.remainingBudget }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" align="center">Aucun budget trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
 {% endblock %}

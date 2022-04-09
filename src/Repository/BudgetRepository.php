@@ -19,6 +19,18 @@ class BudgetRepository extends ServiceEntityRepository
         parent::__construct($registry, Budget::class);
     }
 
+    public function findByProjectId($id)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.projets = :val')
+            ->setParameter('val', $id)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Budget[] Returns an array of Budget objects
     //  */

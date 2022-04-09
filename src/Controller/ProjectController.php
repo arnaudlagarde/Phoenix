@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Fact;
 use App\Entity\Projet;
+use App\Repository\BudgetRepository;
 use App\Repository\FactRepository;
 use App\Repository\MilestoneRepository;
 use App\Repository\ProjetRepository;
+use App\Repository\RiskRepository;
 use App\Repository\StatusRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +21,14 @@ class ProjectController extends AbstractController
     #[Route('/', name: 'app_homepage')]
     public function index(ProjetRepository $projetRepository, StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $user = $this->getUser();
+
+       // $activeProjects = $projetRepository->getActiveProjectsByUser($user, false);
+//        $upcomingProjects = $projetRepository->getUpcomingProjectsByUser($user);
+  //      $projectsWithRisks = $projetRepository->getActiveProjectsByUser($user, true);
+//        $milestones = $milestoneRepository->getMilestonesByUser($user);
+
+
         $queryProjects = $projetRepository->getProjet();
         $queryFacts = $factRepository->getFact();
         $queryMilestones = $milestoneRepository->getMilestone();
@@ -39,6 +49,7 @@ class ProjectController extends AbstractController
             8
         );
         return $this->render('project/dashboard.html.twig', [
+           // 'projects' => $activeProjects->setMaxResults(10)->getQuery()->getResult(),
             'projects' => $projects,
             'status' => $statusRepository->findAll(),
             'milestones' => $milestones,
@@ -48,10 +59,12 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/{id}', name: 'app_show_project')]
-    public function show(Projet $project): Response
+    public function show(Projet $project, RiskRepository $riskRepository, $id): Response
     {
         return $this->render('project/show.html.twig', [
             'project' => $project,
+            'risks' => $riskRepository->findByProjectId($id),
+            'budgets' => $project->getBudget()
 
         ]);
     }
