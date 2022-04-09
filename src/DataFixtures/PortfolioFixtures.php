@@ -16,6 +16,7 @@ class PortfolioFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         foreach (range(1, 6) as $i) {
+            $project = random_int(1, 6);
             $portfolio = (new Portfolio())
                 ->setName('Mon portfolio n°' . $i)
                 ->setResponsible($this->getReference(UserFixtures::class . "responsible$i"));
@@ -31,7 +32,6 @@ class PortfolioFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixtures::class,
-            ProjetFixtures::class,
         ];
     }
 }

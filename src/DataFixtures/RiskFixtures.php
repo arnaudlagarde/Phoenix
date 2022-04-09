@@ -22,12 +22,13 @@ class RiskFixtures extends Fixture implements DependentFixtureInterface
         $faker = Faker\Factory::create('fr_FR');
 
         foreach (range(0, 5) as $i) {
+            $project = random_int(1, 6);
             $risk = (new Risk())
                 ->setName(['Low', 'Medium', 'High'][random_int(0, 2)])
                 ->setProbability($faker->randomFloat(2, 0, 100))
                 ->setIdentificationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
-                ->setResolutionDate($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'));
-                //->setProject($this->getReference(self::PROJET_REFERENCE . $i));
+                ->setResolutionDate($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
+                ->setProjet($this->getReference(ProjetFixtures::PROJET_REFERENCE . $project));
             $tqt = $risk->getName();
             switch ($tqt) {
                 case 'Low':
