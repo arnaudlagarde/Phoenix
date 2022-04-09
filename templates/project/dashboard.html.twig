@@ -13,7 +13,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h2><i class="fa-solid fa-check"></i> Faits passés à confirmer</h2>
+                            {% if facts|length > 0 %}
+                                <h2><i class="fa-solid fa-check"></i> {{ facts|length }} Faits passés à confirmer</h2>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -52,7 +54,11 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h2><i class="fa-solid fa-bars"></i> Mes projets</h2>
+                            {% if projects|length > 0 %}
+                                <h2><i class="fa-solid fa-bars"></i> Mes projets</h2>
+                            {% else %}
+                                <h2><i class="fa-solid fa-bars"></i> Aucun projet trouvé</h2>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -128,7 +134,7 @@
                 {% for status in status %}
                     <ul>
                         <li>
-                            <p>{{ status.name }}</p>
+                            <p>{{ status.name }} : {{ status|length }}</p>
                         </li>
                     </ul>
                 {% else %}
