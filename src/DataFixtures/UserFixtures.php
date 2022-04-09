@@ -47,7 +47,7 @@ class UserFixtures extends Fixture
                 ->setEmail($faker->unique()->safeEmail())
                 ->setFirstName($faker->firstName())
                 ->setLastName($faker->lastName())
-                ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
+                ->setPassword('rootroot')
                 ->setRole('ROLE_USER')
             ;
 

@@ -23,9 +23,8 @@ class ProjectController extends AbstractController
     {
         $user = $this->getUser();
 
-       // $activeProjects = $projetRepository->getActiveProjectsByUser($user, false);
 //        $upcomingProjects = $projetRepository->getUpcomingProjectsByUser($user);
-  //      $projectsWithRisks = $projetRepository->getActiveProjectsByUser($user, true);
+     //   $projectsWithRisks = $projetRepository->getActiveProjectsByUser($user, true);
 //        $milestones = $milestoneRepository->getMilestonesByUser($user);
 
 
@@ -49,7 +48,6 @@ class ProjectController extends AbstractController
             8
         );
         return $this->render('project/dashboard.html.twig', [
-           // 'projects' => $activeProjects->setMaxResults(10)->getQuery()->getResult(),
             'projects' => $projects,
             'status' => $statusRepository->findAll(),
             'milestones' => $milestones,

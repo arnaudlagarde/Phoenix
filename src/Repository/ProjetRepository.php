@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Admin;
 use App\Entity\Projet;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -54,16 +55,9 @@ class ProjetRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
-    public function getProjectsByUser(User $user): QueryBuilder
-    {
-        return $this->createQueryBuilder('p')
-            ->join('p.team', 't')
-            ->where(':user MEMBER OF t.members')
-            ->setParameter('user', $user);
-    }
 
     // get all the active projects of a given user
-    public function getActiveProjectsByUser(User $user, bool $withRisks = false): QueryBuilder
+    public function getActiveProjectsByUser(Admin $user): QueryBuilder
     {
         $qb = $this->createQueryBuilder('p');
 
@@ -78,12 +72,6 @@ class ProjetRepository extends ServiceEntityRepository
             ->andWhere('p.archived = false')
             ->setParameter('user', $user)
             ->setParameter('now', new \DateTime());
-
-        if ($withRisks) {
-            $qb
-                ->leftJoin('p.risks', 'r')
-                ->andWhere('r.id IS NOT NULL');
-        }
 
         return $qb;
     }
