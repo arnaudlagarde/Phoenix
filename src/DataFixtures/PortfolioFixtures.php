@@ -16,10 +16,10 @@ class PortfolioFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         foreach (range(1, 6) as $i) {
-            $project = random_int(1, 6);
             $portfolio = (new Portfolio())
                 ->setName('Mon portfolio n°' . $i)
-                ->setResponsible($this->getReference(UserFixtures::class . "responsible$i"));
+                ->setResponsible($this->getReference(UserFixtures::class . "responsible$i"))
+                ->setBoss($this->getReference(AdminFixtures::class . "boss$i"));
 
             $this->setReference(self::Portfolio_REFERENCE . $i, $portfolio);
             $manager->persist($portfolio);
