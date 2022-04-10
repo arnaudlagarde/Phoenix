@@ -3,7 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Fact;
+use App\Entity\Milestone;
+use App\Entity\Projet;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,11 +17,19 @@ class FactFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name')
-            ->add('DateFact')
-            ->add('description')
-            ->add('Milestone')
-            ->add('projet')
+            ->add('name', TextType::class)
+            ->add('DateFact', DateTimeType::class, [
+                'date_widget' => 'single_text'
+            ])
+            ->add('description', TextType::class)
+            ->add('milestone', EntityType::class, [
+                'class' => Milestone::class,
+                'choice_label' => 'name',
+            ])
+            ->add('projet', EntityType::class, [
+                'class' => Projet::class,
+                'choice_label' => 'title',
+            ])
         ;
     }
 

@@ -1,0 +1,54 @@
+{{ form_start(form) }}
+<div class="d-md-flex">
+    <div class="col-12 col-md-6 p-3">
+        {{ form_label(form.name, "Name") }}
+        {{ form_widget(form.name, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        <div class="mb-3">
+            {{ form_label(form.DateFact, "Début") }}
+            {{ form_widget(form.DateFact.date) }}
+            <div class="d-none">
+                {{ form_widget(form.DateFact.time.hour) }}
+                {{ form_widget(form.DateFact.time.minute) }}
+            </div>
+        </div>
+
+        {{ form_label(form.description, "Description") }}
+        {{ form_widget(form.description, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+
+    </div>
+
+    <div class="col-12 col-md-6 p-3">
+        {{ form_label(form.milestone, "Milestone") }}
+        {{ form_widget(form.milestone, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        {{ form_label(form.projet, "Projet") }}
+        {{ form_widget(form.projet, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+    </div>
+</div>
+
+<div class="text-center mb-3">
+    <button class="btn btn-warning">
+        {{ button_label|default('Enregistrer') }}
+    </button>
+</div>
+
+{{ form_end(form) }}

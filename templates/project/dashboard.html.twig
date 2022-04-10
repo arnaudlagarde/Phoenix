@@ -42,7 +42,7 @@
                                         <td>{{ fact.description }}</td>
                                         <td class="text-right">
                                             <div class="item-actions">
-                                                <a href="#"
+                                                <a href="{{ path('app_edit_fact', {id: fact.id}) }}"
                                                    class="btn btn-sm btn-default">
                                                     <i class="fa fa-edit" aria-hidden="true"></i> Modifier le fait
                                                 </a>

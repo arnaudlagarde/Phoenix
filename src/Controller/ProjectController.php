@@ -6,6 +6,7 @@ use App\Entity\Fact;
 use App\Entity\Milestone;
 use App\Entity\Projet;
 use App\Entity\Risk;
+use App\Form\FactFormType;
 use App\Form\MilestoneFormType;
 use App\Form\ProjectFormType;
 use App\Form\RiskFormType;
@@ -134,152 +135,182 @@ class ProjectController extends AbstractController
     }
 
 
-
-
-
-
-
-
-
-
-
-
     #[Route('/fact/{id}', name: 'app_show_fact')]
-    public function showFact(Fact $fact): Response
+    public function showFact(Projet $project, RiskRepository $riskRepository, $id, BudgetRepository $budgetRepository, MilestoneRepository $milestoneRepository): Response
     {
         return $this->render('project/show.html.twig', [
+            'project' => $project,
+            'risks' => $riskRepository->findByProjectId($id),
+            'budgets' => $budgetRepository->findAll(),
+            'milestones' => $milestoneRepository->findAll()
+
+        ]);
+    }
+    #[Route('/fact/{id}/edit', name: 'app_edit_fact', methods: ['GET', 'POST'])]
+    public function editFact(Request $request, Projet $project, Fact $fact, EntityManagerInterface $entityManager): Response {
+        $form = $this->createForm(FactFormType::class, $fact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('project/fact/edit.html.twig', [
             'fact' => $fact,
-
-        ]);
-    }
-    #[Route('{code}/risk/new', name: 'app_project_risk_new', methods: ['GET', 'POST'])]
-    public function createRisk(Request $request, Projet $project): Response
-    {
-        $risk = (new Risk())
-            ->setProjet($project)
-        ;
-        $form = $this->createForm(RiskFormType::class, $risk);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                try {
-                    $this->entityManager->persist($risk);
-                    $this->entityManager->flush();
-
-                    $this->addFlash('success',"Le risque a bien été ajouté");
-
-                    return $this->redirectToRoute('app_project_risk_edit', [
-                        'code' => $project->getCode(),
-                        'risk_id' => $risk->getId(),
-                    ], Response::HTTP_SEE_OTHER);
-                } catch (\Exception $e) {
-                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'risk' => $risk]);
-                    $this->addFlash('error',"Le risque n'a pas été ajouté");
-                }
-            } else {
-                $this->addFlash('danger', "Le risque n'a pas été ajouté");
-            }
-        }
-
-        return $this->renderForm('risk/new.html.twig', [
-            'risk' => $risk,
-            'form' => $form,
-        ]);
-
-    }
-    #[Route('/{code}/risk/{risk_id}/edit', name: 'app_project_risk_edit', methods: ['GET', 'POST'])]
-    #[Entity('risk', expr: 'repository.find(risk_id)')]
-    public function editRisk(Request $request, Projet $project, Risk $risk): Response
-    {
-
-        $form = $this->createForm(RiskFormType::class, $risk);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                try {
-                    $this->entityManager->flush();
-
-                    $this->addFlash('success', "Le risque a bien été modifié");
-                } catch (\Exception $e) {
-                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'risk' => $risk]);
-                    $this->addFlash('danger', "Le risque n'a pas pu être modifié");
-                }
-            } else {
-                $this->addFlash('danger', "Le risque n'a pas pu être modifié");
-            }
-        }
-
-        return $this->renderForm('risk/edit.html.twig', [
-            'risk' => $risk,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{code}/milestone/new', name: 'app_project_milestone_new', methods: ['GET', 'POST'])]
-    public function newMilestone(Request $request, Projet $project): Response
-    {
-        $milestone = (new Milestone())
-            ->setProjet($project)
-        ;
-        $form = $this->createForm(MilestoneFormType::class, $milestone);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                try {
-                    $this->entityManager->persist($milestone);
-                    $this->entityManager->flush();
 
-                    $this->addFlash('success', "Le jalon a bien été créé");
 
-                    return $this->redirectToRoute('app_project_milestone_edit', [
-                        'code' => $project->getCode(),
-                        'milestone_id' => $milestone->getId(),
-                    ], Response::HTTP_SEE_OTHER);
-                } catch (\Exception $e) {
-                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'milestone' => $milestone]);
-                    $this->addFlash('error', "erreur");
-                }
-            } else {
-                $this->addFlash('danger', "aïe");
-            }
-        }
 
-        return $this->renderForm('milestone/new.html.twig', [
-            'milestone' => $milestone,
-            'form' => $form,
-        ]);
-    }
-    #[Route('/milestone/{milestone_id}/edit', name: 'app_project_milestone_edit', methods: ['GET', 'POST'])]
-    public function editMilestone(Request $request, Projet $project, Milestone $milestone): Response
-    {
-        if ($project !== $milestone->getProjet()) {
-            throw new NotFoundHttpException('Milestone not found.');
-        }
 
-        $form = $this->createForm(MilestoneFormType::class, $milestone);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                try {
-                    $this->entityManager->flush();
 
-                    $this->addFlash('success', " Le Jalon a bien été modifié");
-                } catch (\Exception $e) {
-                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'milestone' => $milestone]);
-                    $this->addFlash('danger', "Le jalon n'a pas pu être modifié");
-                }
-            } else {
-                $this->addFlash('danger', "Le jalon n'a pas pu être modifié");
-            }
-        }
 
-        return $this->renderForm('milestone/edit.html.twig', [
-            'milestone' => $milestone,
-            'form' => $form,
-        ]);
-    }
+
+
+
+//
+//    #[Route('/fact/{id}', name: 'app_show_fact')]
+//    public function showFact(Fact $fact): Response
+//    {
+//        return $this->render('project/show.html.twig', [
+//            'fact' => $fact,
+//
+//        ]);
+//    }
+//    #[Route('{code}/risk/new', name: 'app_project_risk_new', methods: ['GET', 'POST'])]
+//    public function createRisk(Request $request, Projet $project): Response
+//    {
+//        $risk = (new Risk())
+//            ->setProjet($project)
+//        ;
+//        $form = $this->createForm(RiskFormType::class, $risk);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted()) {
+//            if ($form->isValid()) {
+//                try {
+//                    $this->entityManager->persist($risk);
+//                    $this->entityManager->flush();
+//
+//                    $this->addFlash('success',"Le risque a bien été ajouté");
+//
+//                    return $this->redirectToRoute('app_project_risk_edit', [
+//                        'code' => $project->getCode(),
+//                        'risk_id' => $risk->getId(),
+//                    ], Response::HTTP_SEE_OTHER);
+//                } catch (\Exception $e) {
+//                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'risk' => $risk]);
+//                    $this->addFlash('error',"Le risque n'a pas été ajouté");
+//                }
+//            } else {
+//                $this->addFlash('danger', "Le risque n'a pas été ajouté");
+//            }
+//        }
+//
+//        return $this->renderForm('risk/new.html.twig', [
+//            'risk' => $risk,
+//            'form' => $form,
+//        ]);
+//
+//    }
+//    #[Route('/{code}/risk/{risk_id}/edit', name: 'app_project_risk_edit', methods: ['GET', 'POST'])]
+//    #[Entity('risk', expr: 'repository.find(risk_id)')]
+//    public function editRisk(Request $request, Projet $project, Risk $risk): Response
+//    {
+//
+//        $form = $this->createForm(RiskFormType::class, $risk);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted()) {
+//            if ($form->isValid()) {
+//                try {
+//                    $this->entityManager->flush();
+//
+//                    $this->addFlash('success', "Le risque a bien été modifié");
+//                } catch (\Exception $e) {
+//                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'risk' => $risk]);
+//                    $this->addFlash('danger', "Le risque n'a pas pu être modifié");
+//                }
+//            } else {
+//                $this->addFlash('danger', "Le risque n'a pas pu être modifié");
+//            }
+//        }
+//
+//        return $this->renderForm('risk/edit.html.twig', [
+//            'risk' => $risk,
+//            'form' => $form,
+//        ]);
+//    }
+//
+//    #[Route('/{code}/milestone/new', name: 'app_project_milestone_new', methods: ['GET', 'POST'])]
+//    public function newMilestone(Request $request, Projet $project): Response
+//    {
+//        $milestone = (new Milestone())
+//            ->setProjet($project)
+//        ;
+//        $form = $this->createForm(MilestoneFormType::class, $milestone);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted()) {
+//            if ($form->isValid()) {
+//                try {
+//                    $this->entityManager->persist($milestone);
+//                    $this->entityManager->flush();
+//
+//                    $this->addFlash('success', "Le jalon a bien été créé");
+//
+//                    return $this->redirectToRoute('app_project_milestone_edit', [
+//                        'code' => $project->getCode(),
+//                        'milestone_id' => $milestone->getId(),
+//                    ], Response::HTTP_SEE_OTHER);
+//                } catch (\Exception $e) {
+//                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'milestone' => $milestone]);
+//                    $this->addFlash('error', "erreur");
+//                }
+//            } else {
+//                $this->addFlash('danger', "aïe");
+//            }
+//        }
+//
+//        return $this->renderForm('milestone/new.html.twig', [
+//            'milestone' => $milestone,
+//            'form' => $form,
+//        ]);
+//    }
+//    #[Route('/milestone/{milestone_id}/edit', name: 'app_project_milestone_edit', methods: ['GET', 'POST'])]
+//    public function editMilestone(Request $request, Projet $project, Milestone $milestone): Response
+//    {
+//        if ($project !== $milestone->getProjet()) {
+//            throw new NotFoundHttpException('Milestone not found.');
+//        }
+//
+//        $form = $this->createForm(MilestoneFormType::class, $milestone);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted()) {
+//            if ($form->isValid()) {
+//                try {
+//                    $this->entityManager->flush();
+//
+//                    $this->addFlash('success', " Le Jalon a bien été modifié");
+//                } catch (\Exception $e) {
+//                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'milestone' => $milestone]);
+//                    $this->addFlash('danger', "Le jalon n'a pas pu être modifié");
+//                }
+//            } else {
+//                $this->addFlash('danger', "Le jalon n'a pas pu être modifié");
+//            }
+//        }
+//
+//        return $this->renderForm('milestone/edit.html.twig', [
+//            'milestone' => $milestone,
+//            'form' => $form,
+//        ]);
+//    }
 }

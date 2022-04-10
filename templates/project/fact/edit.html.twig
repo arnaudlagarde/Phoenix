@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Nouveau projet
+{% endblock %}
+
+{% block body %}
+
+    {% include 'base/nav.html.twig' %}
+    <h1 class="text-center py-5">Modifier un projet</h1>
+
+    {{ include("project/fact/_form.html.twig", { button_label: "Enregistrer" }) }}
+
+    <div class="d-flex justify-content-evenly align-items-center mb-3">
+        <a href="{{ path('app_homepage') }}">
+            <i class="fa-solid fa-arrow-left-long fa-2x"></i>
+        </a>
+
+    </div>
+    {% include 'base/footer.html.twig' %}
+
+{% endblock %}
