@@ -1,0 +1,33 @@
+{{ form_start(form) }}
+<div class="d-md-flex">
+    <div class="col-12 col-md-6 p-3">
+        {{ form_label(form.name, "Name") }}
+        {{ form_widget(form.name, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        <div class="mb-3">
+            {{ form_label(form.value, "Valeur") }}
+            {{ form_widget(form.value) }}
+        </div>
+
+        {{ form_label(form.mandatory, "Mandatory") }}
+        {{ form_widget(form.mandatory) }}
+
+
+    </div>
+
+    <div class="col-12 col-md-6 p-3">
+        {{ form_label(form.projet, "Projet") }}
+        {{ form_widget(form.projet) }}
+
+    </div>
+</div>
+
+<button class="btn btn-warning">
+    {{ button_label|default('Enregistrer') }}
+</button>
+
+{{ form_end(form) }}

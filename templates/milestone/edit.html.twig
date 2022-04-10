@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Nouveau projet
+{% endblock %}
+
+{% block body %}
+
+    {% include 'base/nav.html.twig' %}
+    <h1 class="text-center">Modifier un jalon</h1>
+
+    {{ include("milestone/_form.html.twig", { button_label: "Enregistrer" }) }}
+
+    <a href="{{ path('app_homepage') }}">
+        <i class="fa-solid fa-arrow-left-long fa-2x"></i>
+    </a>
+
+    {% include 'base/footer.html.twig' %}
+
+{% endblock %}

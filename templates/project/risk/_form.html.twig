@@ -1,27 +1,19 @@
 {{ form_start(form) }}
 <div class="d-md-flex">
     <div class="col-12 col-md-6">
-        {{ form_label(form.Name, "Name") }}
-        {{ form_widget(form.Name, {
+        {{ form_label(form.name, "Name") }}
+        {{ form_widget(form.name, {
             attr: {
                 class: "mb-3"
             }
         }) }}
 
         <div class="col-12 col-md-12">
-            {{ form_label(form.IdentificationDate, "Début") }}
-            {{ form_widget(form.IdentificationDate.date) }}
+            {{ form_label(form.DateFact, "Début") }}
+            {{ form_widget(form.DateFact.date) }}
             <div class="d-none">
-                {{ form_widget(form.IdentificationDate.time.hour) }}
-                {{ form_widget(form.IdentificationDate.time.minute) }}
-            </div>
-        </div>
-        <div class="col-12 col-md-12">
-            {{ form_label(form.ResolutionDate, "Début") }}
-            {{ form_widget(form.ResolutionDate.date) }}
-            <div class="d-none">
-                {{ form_widget(form.ResolutionDate.time.hour) }}
-                {{ form_widget(form.ResolutionDate.time.minute) }}
+                {{ form_widget(form.DateFact.time.hour) }}
+                {{ form_widget(form.DateFact.time.minute) }}
             </div>
         </div>
 

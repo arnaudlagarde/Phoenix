@@ -10,6 +10,7 @@ use App\Form\FactFormType;
 use App\Form\MilestoneFormType;
 use App\Form\ProjectFormType;
 use App\Form\RiskFormType;
+use App\Repository\AdminRepository;
 use App\Repository\BudgetRepository;
 use App\Repository\FactRepository;
 use App\Repository\MilestoneRepository;
@@ -18,41 +19,34 @@ use App\Repository\RiskRepository;
 use App\Repository\StatusRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use Psr\Log\LoggerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProjectController extends AbstractController
 {
-
-    public function __construct(
-        private LoggerInterface $logger,
-        private EntityManagerInterface $entityManager
-    ) {
-    }
     #[Route('/', name: 'app_homepage')]
-    public function index(ProjetRepository $projetRepository, StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request, AdminRepository $adminRepository): Response
     {
         $user = $this->getUser();
+        $username  = $user->getUserIdentifier();
+        $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
 
-//        $upcomingProjects = $projetRepository->getUpcomingProjectsByUser($user);
-     //   $projectsWithRisks = $projetRepository->getActiveProjectsByUser($user, true);
-//        $milestones = $milestoneRepository->getMilestonesByUser($user);
+        if ($team !== null) {
+            $queryProjects = $team->getProjet();
+            $projects = $paginator->paginate(
+                $queryProjects,
+                $request->query->get('page', 1),
+                8
+            );
+        }
 
-
-        $queryProjects = $projetRepository->getProjet();
+        //$queryProjects = $projetRepository->getProjet();
         $queryFacts = $factRepository->getFact();
         $queryMilestones = $milestoneRepository->getMilestone();
 
-        $projects = $paginator->paginate(
-            $queryProjects,
-            $request->query->get('page', 1),
-            8
-        );
+
         $facts = $paginator->paginate(
             $queryFacts,
             $request->query->get('page', 1),
@@ -70,6 +64,28 @@ class ProjectController extends AbstractController
             'facts' => $facts
         ]);
     }
+
+    #[Route('/projects', name: 'app_projects')]
+    public function projects(AdminRepository $adminRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $user = $this->getUser();
+        $username  = $user->getUserIdentifier();
+        $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
+
+        if ($team !== null) {
+            $queryProjects = $team->getProjet();
+            $projects = $paginator->paginate(
+                $queryProjects,
+                $request->query->get('page', 1),
+                15
+            );
+        }
+
+        return $this->render('project/projects.html.twig', [
+            'projects' => $projects
+        ]);
+    }
+
     #[Route('/new', name: 'app_create_project', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response {
         $project = new Projet();
@@ -117,22 +133,6 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
-
-    #[Route('/projects', name: 'app_projects')]
-    public function projects(ProjetRepository $projetRepository, PaginatorInterface $paginator, Request $request): Response
-    {
-        $query = $projetRepository->getProjet();
-
-        $projects = $paginator->paginate(
-            $query,
-            $request->query->get('page', 1),
-            15
-        );
-        return $this->render('project/projects.html.twig', [
-            'projects' => $projects
-        ]);
-    }
-
 
     #[Route('/fact/{id}', name: 'app_show_fact')]
     public function showFact(Projet $project, RiskRepository $riskRepository, $id, BudgetRepository $budgetRepository, MilestoneRepository $milestoneRepository): Response
@@ -225,155 +225,22 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/newMilestone', name: 'app_create_milestone', methods: ['GET', 'POST'])]
+    public function newMilestone(Request $request, EntityManagerInterface $entityManager): Response {
+        $milestone = new Milestone();
+        $form = $this->createForm(MilestoneFormType::class, $milestone);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($milestone);
+            $entityManager->flush();
 
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+        }
 
-
-
-
-
-
-
-
-
-
-//
-//    #[Route('/fact/{id}', name: 'app_show_fact')]
-//    public function showFact(Fact $fact): Response
-//    {
-//        return $this->render('project/show.html.twig', [
-//            'fact' => $fact,
-//
-//        ]);
-//    }
-//    #[Route('{code}/risk/new', name: 'app_project_risk_new', methods: ['GET', 'POST'])]
-//    public function createRisk(Request $request, Projet $project): Response
-//    {
-//        $risk = (new Risk())
-//            ->setProjet($project)
-//        ;
-//        $form = $this->createForm(RiskFormType::class, $risk);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted()) {
-//            if ($form->isValid()) {
-//                try {
-//                    $this->entityManager->persist($risk);
-//                    $this->entityManager->flush();
-//
-//                    $this->addFlash('success',"Le risque a bien été ajouté");
-//
-//                    return $this->redirectToRoute('app_project_risk_edit', [
-//                        'code' => $project->getCode(),
-//                        'risk_id' => $risk->getId(),
-//                    ], Response::HTTP_SEE_OTHER);
-//                } catch (\Exception $e) {
-//                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'risk' => $risk]);
-//                    $this->addFlash('error',"Le risque n'a pas été ajouté");
-//                }
-//            } else {
-//                $this->addFlash('danger', "Le risque n'a pas été ajouté");
-//            }
-//        }
-//
-//        return $this->renderForm('risk/new.html.twig', [
-//            'risk' => $risk,
-//            'form' => $form,
-//        ]);
-//
-//    }
-//    #[Route('/{code}/risk/{risk_id}/edit', name: 'app_project_risk_edit', methods: ['GET', 'POST'])]
-//    #[Entity('risk', expr: 'repository.find(risk_id)')]
-//    public function editRisk(Request $request, Projet $project, Risk $risk): Response
-//    {
-//
-//        $form = $this->createForm(RiskFormType::class, $risk);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted()) {
-//            if ($form->isValid()) {
-//                try {
-//                    $this->entityManager->flush();
-//
-//                    $this->addFlash('success', "Le risque a bien été modifié");
-//                } catch (\Exception $e) {
-//                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'risk' => $risk]);
-//                    $this->addFlash('danger', "Le risque n'a pas pu être modifié");
-//                }
-//            } else {
-//                $this->addFlash('danger', "Le risque n'a pas pu être modifié");
-//            }
-//        }
-//
-//        return $this->renderForm('risk/edit.html.twig', [
-//            'risk' => $risk,
-//            'form' => $form,
-//        ]);
-//    }
-//
-//    #[Route('/{code}/milestone/new', name: 'app_project_milestone_new', methods: ['GET', 'POST'])]
-//    public function newMilestone(Request $request, Projet $project): Response
-//    {
-//        $milestone = (new Milestone())
-//            ->setProjet($project)
-//        ;
-//        $form = $this->createForm(MilestoneFormType::class, $milestone);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted()) {
-//            if ($form->isValid()) {
-//                try {
-//                    $this->entityManager->persist($milestone);
-//                    $this->entityManager->flush();
-//
-//                    $this->addFlash('success', "Le jalon a bien été créé");
-//
-//                    return $this->redirectToRoute('app_project_milestone_edit', [
-//                        'code' => $project->getCode(),
-//                        'milestone_id' => $milestone->getId(),
-//                    ], Response::HTTP_SEE_OTHER);
-//                } catch (\Exception $e) {
-//                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'milestone' => $milestone]);
-//                    $this->addFlash('error', "erreur");
-//                }
-//            } else {
-//                $this->addFlash('danger', "aïe");
-//            }
-//        }
-//
-//        return $this->renderForm('milestone/new.html.twig', [
-//            'milestone' => $milestone,
-//            'form' => $form,
-//        ]);
-//    }
-//    #[Route('/milestone/{milestone_id}/edit', name: 'app_project_milestone_edit', methods: ['GET', 'POST'])]
-//    public function editMilestone(Request $request, Projet $project, Milestone $milestone): Response
-//    {
-//        if ($project !== $milestone->getProjet()) {
-//            throw new NotFoundHttpException('Milestone not found.');
-//        }
-//
-//        $form = $this->createForm(MilestoneFormType::class, $milestone);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted()) {
-//            if ($form->isValid()) {
-//                try {
-//                    $this->entityManager->flush();
-//
-//                    $this->addFlash('success', " Le Jalon a bien été modifié");
-//                } catch (\Exception $e) {
-//                    $this->logger->critical($e->getMessage(), ['exception' => $e, 'milestone' => $milestone]);
-//                    $this->addFlash('danger', "Le jalon n'a pas pu être modifié");
-//                }
-//            } else {
-//                $this->addFlash('danger', "Le jalon n'a pas pu être modifié");
-//            }
-//        }
-//
-//        return $this->renderForm('milestone/edit.html.twig', [
-//            'milestone' => $milestone,
-//            'form' => $form,
-//        ]);
-//    }
+        return $this->renderForm('milestone/new.html.twig', [
+            'milestone' => $milestone,
+            'form' => $form,
+        ]);
+    }
 }
