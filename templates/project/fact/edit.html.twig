@@ -10,10 +10,9 @@
     <h1 class="text-center py-5">Modifier un fait</h1>
 
     {{ include("project/fact/_form.html.twig", { button_label: "Enregistrer" }) }}
-
-        <a href="{{ path('app_homepage') }}">
-            <i class="fa-solid fa-arrow-left-long fa-2x"></i>
-        </a>
+    <a href="{{ path('app_homepage') }}">
+        <i class="fa-solid fa-arrow-left-long fa-2x"></i>
+    </a>
 
     {% include 'base/footer.html.twig' %}
 

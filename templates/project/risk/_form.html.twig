@@ -2,11 +2,7 @@
 <div class="d-md-flex">
     <div class="col-12 col-md-6">
         {{ form_label(form.name, "Name") }}
-        {{ form_widget(form.name, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
+        {{ form_widget(form.name) }}
 
         <div class="col-12 col-md-12">
             {{ form_label(form.DateFact, "Début") }}
@@ -16,26 +12,17 @@
                 {{ form_widget(form.DateFact.time.minute) }}
             </div>
         </div>
+        <div class="col-12 col-md-12">
+            {{ form_label(form.Critical, "Critical") }}
+            {{ form_widget(form.Critical) }}
+        </div>
+        <div class="col-12 col-md-12">
+            {{ form_label(form.Probability, "Probability") }}
+            {{ form_widget(form.Probability) }}
 
-{#        {{ form_label(form.Critical, "Critique") }}#}
-{#        {{ form_widget(form.Critical, {#}
-{#            attr: {#}
-{#                class: "mb-3"#}
-{#            }#}
-{#        }) }}#}
-
-
-    </div>
-
-    <div class="col-12 col-md-12 p-3">
-        {{ form_label(form.Probability, "Probability") }}
-        {{ form_widget(form.Probability, {
-
-        }) }}
-
-        {{ form_label(form.projet, "Projet") }}
-        {{ form_widget(form.projet) }}
-
+            {{ form_label(form.projet, "Projet") }}
+            {{ form_widget(form.projet) }}
+        </div>
     </div>
 </div>
 

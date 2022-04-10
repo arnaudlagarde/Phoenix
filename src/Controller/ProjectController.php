@@ -30,22 +30,12 @@ class ProjectController extends AbstractController
     public function index(StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request, AdminRepository $adminRepository): Response
     {
         $user = $this->getUser();
-        $username  = $user->getUserIdentifier();
+        $username = $user->getUserIdentifier();
         $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
+        $queryProjects = $team->getProjet();
 
-        if ($team !== null) {
-            $queryProjects = $team->getProjet();
-            $projects = $paginator->paginate(
-                $queryProjects,
-                $request->query->get('page', 1),
-                8
-            );
-        }
-
-        //$queryProjects = $projetRepository->getProjet();
         $queryFacts = $factRepository->getFact();
         $queryMilestones = $milestoneRepository->getMilestone();
-
 
         $facts = $paginator->paginate(
             $queryFacts,
@@ -58,7 +48,7 @@ class ProjectController extends AbstractController
             8
         );
         return $this->render('project/dashboard.html.twig', [
-            'projects' => $projects,
+            'projects' => $queryProjects,
             'status' => $statusRepository->findAll(),
             'milestones' => $milestones,
             'facts' => $facts
@@ -69,7 +59,7 @@ class ProjectController extends AbstractController
     public function projects(AdminRepository $adminRepository, PaginatorInterface $paginator, Request $request): Response
     {
         $user = $this->getUser();
-        $username  = $user->getUserIdentifier();
+        $username = $user->getUserIdentifier();
         $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
 
         if ($team !== null) {
@@ -87,7 +77,8 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/new', name: 'app_create_project', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response {
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
         $project = new Projet();
         $form = $this->createForm(ProjectFormType::class, $project);
         $form->handleRequest($request);
@@ -118,7 +109,8 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/{id}/edit', name: 'app_edit_project', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Projet $project, EntityManagerInterface $entityManager): Response {
+    public function edit(Request $request, Projet $project, EntityManagerInterface $entityManager): Response
+    {
         $form = $this->createForm(ProjectFormType::class, $project);
         $form->handleRequest($request);
 
@@ -145,8 +137,10 @@ class ProjectController extends AbstractController
 
         ]);
     }
+
     #[Route('/fact/{id}/edit', name: 'app_edit_fact', methods: ['GET', 'POST'])]
-    public function editFact(Request $request, Fact $fact, EntityManagerInterface $entityManager): Response {
+    public function editFact(Request $request, Fact $fact, EntityManagerInterface $entityManager): Response
+    {
         $form = $this->createForm(FactFormType::class, $fact);
         $form->handleRequest($request);
 
@@ -161,8 +155,10 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
+
     #[Route('/newFact', name: 'app_create_fact', methods: ['GET', 'POST'])]
-    public function newFact(Request $request, EntityManagerInterface $entityManager): Response {
+    public function newFact(Request $request, EntityManagerInterface $entityManager): Response
+    {
         $risk = new Fact();
         $form = $this->createForm(FactFormType::class, $risk);
         $form->handleRequest($request);
@@ -174,7 +170,7 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('project/risk/new.html.twig', [
+        return $this->renderForm('project/fact/new.html.twig', [
             'risk' => $risk,
             'form' => $form,
         ]);
@@ -191,8 +187,10 @@ class ProjectController extends AbstractController
 
         ]);
     }
+
     #[Route('/risk/{id}/edit', name: 'app_edit_risk', methods: ['GET', 'POST'])]
-    public function editRisk(Request $request, Risk $risk, EntityManagerInterface $entityManager): Response {
+    public function editRisk(Request $request, Risk $risk, EntityManagerInterface $entityManager): Response
+    {
         $form = $this->createForm(RiskFormType::class, $risk);
         $form->handleRequest($request);
 
@@ -207,8 +205,10 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
+
     #[Route('/newRisk', name: 'app_create_risk', methods: ['GET', 'POST'])]
-    public function newRisk(Request $request, EntityManagerInterface $entityManager): Response {
+    public function newRisk(Request $request, EntityManagerInterface $entityManager): Response
+    {
         $risk = new Risk();
         $form = $this->createForm(RiskFormType::class, $risk);
         $form->handleRequest($request);
@@ -225,8 +225,10 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
+
     #[Route('/newMilestone', name: 'app_create_milestone', methods: ['GET', 'POST'])]
-    public function newMilestone(Request $request, EntityManagerInterface $entityManager): Response {
+    public function newMilestone(Request $request, EntityManagerInterface $entityManager): Response
+    {
         $milestone = new Milestone();
         $form = $this->createForm(MilestoneFormType::class, $milestone);
         $form->handleRequest($request);
@@ -243,8 +245,10 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
+
     #[Route('/milestone/{id}/edit', name: 'app_edit_milestone', methods: ['GET', 'POST'])]
-    public function editMilestone(Request $request, Milestone $milestone, EntityManagerInterface $entityManager): Response {
+    public function editMilestone(Request $request, Milestone $milestone, EntityManagerInterface $entityManager): Response
+    {
         $form = $this->createForm(MilestoneFormType::class, $milestone);
         $form->handleRequest($request);
 

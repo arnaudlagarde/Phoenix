@@ -7,14 +7,12 @@
 {% block body %}
 
     {% include 'base/nav.html.twig' %}
+
     <h1 class="text-center"> Créer un nouveau fait</h1>
 
     {{ include('project/fact/_form.html.twig') }}
 
-    <div class="text-center mb-3">
-
-        <a href="{{ path('app_homepage') }}"><i class="fa-solid fa-arrow-left-long fa-2x"></i></a>
-    </div>
+    <a href="{{ path('app_homepage') }}"><i class="fa-solid fa-arrow-left-long fa-2x"></i></a>
 
     {% include 'base/footer.html.twig' %}
 
