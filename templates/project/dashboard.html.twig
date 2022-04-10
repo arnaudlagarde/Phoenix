@@ -37,8 +37,7 @@
                                 <tbody>
                                 {% for fact in facts %}
                                     <tr>
-                                        <td><a href="{{ path('app_show_project', {id: fact.id}) }}">{{ fact.name }}</a>
-                                        </td>
+                                        <td>{{ fact.name }}</td>
                                         <td>{{ fact.dateFact | date('d/m/Y') }}</td>
                                         <td>{{ fact.description }}</td>
                                         <td class="text-right">

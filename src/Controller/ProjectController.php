@@ -68,7 +68,6 @@ class ProjectController extends AbstractController
             'status' => $statusRepository->findAll(),
             'milestones' => $milestones,
             'facts' => $facts
-            //'count' => $projetRepository->projectStatus()
         ]);
     }
     #[Route('/new', name: 'app_create_project', methods: ['GET', 'POST'])]
@@ -164,19 +163,65 @@ class ProjectController extends AbstractController
     }
     #[Route('/newFact', name: 'app_create_fact', methods: ['GET', 'POST'])]
     public function newFact(Request $request, EntityManagerInterface $entityManager): Response {
-        $fact = new Fact();
-        $form = $this->createForm(FactFormType::class, $fact);
+        $risk = new Fact();
+        $form = $this->createForm(FactFormType::class, $risk);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($fact);
+            $entityManager->persist($risk);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('project/fact/new.html.twig', [
-            'fact' => $fact,
+        return $this->renderForm('project/risk/new.html.twig', [
+            'risk' => $risk,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/risk/{id}', name: 'app_show_risk')]
+    public function showRisk(Projet $project, RiskRepository $riskRepository, $id, BudgetRepository $budgetRepository, MilestoneRepository $milestoneRepository): Response
+    {
+        return $this->render('project/risk/show.html.twig', [
+            'project' => $project,
+            'risks' => $riskRepository->findByProjectId($id),
+            'budgets' => $budgetRepository->findAll(),
+            'milestones' => $milestoneRepository->findAll()
+
+        ]);
+    }
+    #[Route('/risk/{id}/edit', name: 'app_edit_risk', methods: ['GET', 'POST'])]
+    public function editRisk(Request $request, Risk $risk, EntityManagerInterface $entityManager): Response {
+        $form = $this->createForm(RiskFormType::class, $risk);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('project/risk/edit.html.twig', [
+            'risk' => $risk,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/newRisk', name: 'app_create_risk', methods: ['GET', 'POST'])]
+    public function newRisk(Request $request, EntityManagerInterface $entityManager): Response {
+        $risk = new Risk();
+        $form = $this->createForm(RiskFormType::class, $risk);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($risk);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('project/risk/new.html.twig', [
+            'risk' => $risk,
             'form' => $form,
         ]);
     }

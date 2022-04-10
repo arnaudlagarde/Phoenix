@@ -19,24 +19,16 @@ class AdminFixtures extends Fixture
 
         $faker = \Faker\Factory::create('fr_FR');
 
-        $admin = new Admin();
-        $admin->setUsername('root');
-        $admin->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC');
-        $admin->setRoles((array)'ROLE_ADMIN');
-        $admin->setFirstName('Gregoire');
-        $admin->setLastName('Rondet');
-
-        $manager->persist($admin);
-
-        $manager->flush();
-
         // Root
         $root = (new Admin())
             ->setUsername('root@phoenix.com')
             ->setFirstName('Phoenix')
-            ->setLastName('Grégoire')
-            ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
+            ->setLastName('Root')
             ->setRoles((array)'ROLE_ADMIN');
+        $root->setPassword($this->hasher->hashPassword(
+            $root,
+            "rootroot"
+        ));
 
 
         $this->addReference(self::class . 'root', $root);

@@ -30,8 +30,9 @@
                 <td>{{ risk.ResolutionDate | date('d/m/Y') }}</td>
                 <td class="text-right">
                     <div class="item-actions">
-                        <a href="{{ path('app_project_risk_edit', { code: project.code, risk_id: risk.id }) }}">
-                            <i class="fa fa-pencil me-1" title="editer"></i>
+                        <a href="{{ path('app_edit_risk', {id: risk.id}) }}"
+                           class="btn btn-sm btn-default">
+                            <i class="fa fa-edit" aria-hidden="true"></i> Modifier le risque
                         </a>
                     </div>
                 </td>
@@ -44,7 +45,7 @@
         </tbody>
     </table>
 
-    <h2> Les budgets</h2>
+    <h2> Les budgets du projet</h2>
 
     <table class="table table-striped table-middle-aligned">
         <thead>
@@ -63,15 +64,16 @@
                 <td>{{ budget.remainingBudget }}</td>
                 <td class="text-right">
                     <div class="item-actions">
-                        <a href="#" class="btn btn-sm btn-default">
-                            <i class="fa fa-eye" aria-hidden="true"></i> Editer le budget
+                        <a href="#"
+                           class="btn btn-sm btn-default">
+                            <i class="fa fa-edit" aria-hidden="true"></i> Modifier le budget
                         </a>
                     </div>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" align="center">Aucun budget trouvé</td>
+                <td colspan="4">Aucun budget trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -104,7 +106,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" align="center">Aucun budget trouvé</td>
+                <td colspan="4">Aucun Jalon trouvé</td>
             </tr>
         {% endfor %}
         </tbody>

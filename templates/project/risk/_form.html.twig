@@ -1,0 +1,56 @@
+{{ form_start(form) }}
+<div class="d-md-flex">
+    <div class="col-12 col-md-6">
+        {{ form_label(form.Name, "Name") }}
+        {{ form_widget(form.Name, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        <div class="col-12 col-md-12">
+            {{ form_label(form.IdentificationDate, "Début") }}
+            {{ form_widget(form.IdentificationDate.date) }}
+            <div class="d-none">
+                {{ form_widget(form.IdentificationDate.time.hour) }}
+                {{ form_widget(form.IdentificationDate.time.minute) }}
+            </div>
+        </div>
+        <div class="col-12 col-md-12">
+            {{ form_label(form.ResolutionDate, "Début") }}
+            {{ form_widget(form.ResolutionDate.date) }}
+            <div class="d-none">
+                {{ form_widget(form.ResolutionDate.time.hour) }}
+                {{ form_widget(form.ResolutionDate.time.minute) }}
+            </div>
+        </div>
+
+{#        {{ form_label(form.Critical, "Critique") }}#}
+{#        {{ form_widget(form.Critical, {#}
+{#            attr: {#}
+{#                class: "mb-3"#}
+{#            }#}
+{#        }) }}#}
+
+
+    </div>
+
+    <div class="col-12 col-md-12 p-3">
+        {{ form_label(form.Probability, "Probability") }}
+        {{ form_widget(form.Probability, {
+
+        }) }}
+
+        {{ form_label(form.projet, "Projet") }}
+        {{ form_widget(form.projet) }}
+
+    </div>
+</div>
+
+<div class="col-12 col-md-12">
+    <button class="btn btn-warning">
+        {{ button_label|default('Enregistrer') }}
+    </button>
+</div>
+
+{{ form_end(form) }}
