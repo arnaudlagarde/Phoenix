@@ -14,14 +14,19 @@ class PortfolioController extends AbstractController
     #[Route('/portfolio', name: 'app_portfolio')]
     public function index(PortfolioRepository $portfolioRepository, AdminRepository $adminRepository): Response
     {
+        $team = [];
         $user = $this->getUser();
-        $username  = $user->getUserIdentifier();
-        $team = $adminRepository->findOneBy(['username' => $username])->getPortfolios();
+        if ($user !== null) {
+            $username = $user->getUserIdentifier();
+            $team = $adminRepository->findOneBy(['username' => $username])->getPortfolios();
+        }
+
 
         return $this->render('portfolio/index.html.twig', [
             'portfolios' => $team,
         ]);
     }
+
     #[Route('/portfolio/{id}', name: 'app_show_portfolio')]
     public function show(Portfolio $portfolio, $id): Response
     {
