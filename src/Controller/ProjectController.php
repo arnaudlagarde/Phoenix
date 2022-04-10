@@ -16,6 +16,7 @@ use App\Repository\AdminRepository;
 use App\Repository\BudgetRepository;
 use App\Repository\FactRepository;
 use App\Repository\MilestoneRepository;
+use App\Repository\ProjetRepository;
 use App\Repository\RiskRepository;
 use App\Repository\StatusRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -28,12 +29,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjectController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
-    public function index(StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request, AdminRepository $adminRepository): Response
+    public function index(StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request, AdminRepository $adminRepository, ProjetRepository $projetRepository): Response
     {
         $user = $this->getUser();
         $username = $user->getUserIdentifier();
         $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
         $queryProjects = $team->getProjet();
+
 
         $queryFacts = $factRepository->getFact();
         $queryMilestones = $milestoneRepository->getMilestone();
@@ -98,8 +100,9 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/project/{id}', name: 'app_show_project')]
-    public function show(Projet $project, RiskRepository $riskRepository, $id, BudgetRepository $budgetRepository, MilestoneRepository $milestoneRepository): Response
+    public function show(Projet $project, RiskRepository $riskRepository, $id, BudgetRepository $budgetRepository, MilestoneRepository $milestoneRepository, ProjetRepository $projetRepository): Response
     {
+
         return $this->render('project/show.html.twig', [
             'project' => $project,
             'risks' => $riskRepository->findByProjectId($id),
@@ -264,6 +267,7 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
+
     #[Route('/budget/{id}/edit', name: 'app_edit_budget', methods: ['GET', 'POST'])]
     public function editBudget(Request $request, Budget $budget, EntityManagerInterface $entityManager): Response
     {
