@@ -147,7 +147,7 @@ class ProjectController extends AbstractController
         ]);
     }
     #[Route('/fact/{id}/edit', name: 'app_edit_fact', methods: ['GET', 'POST'])]
-    public function editFact(Request $request, Projet $project, Fact $fact, EntityManagerInterface $entityManager): Response {
+    public function editFact(Request $request, Fact $fact, EntityManagerInterface $entityManager): Response {
         $form = $this->createForm(FactFormType::class, $fact);
         $form->handleRequest($request);
 
@@ -158,6 +158,24 @@ class ProjectController extends AbstractController
         }
 
         return $this->renderForm('project/fact/edit.html.twig', [
+            'fact' => $fact,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/newFact', name: 'app_create_fact', methods: ['GET', 'POST'])]
+    public function newFact(Request $request, EntityManagerInterface $entityManager): Response {
+        $fact = new Fact();
+        $form = $this->createForm(FactFormType::class, $fact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($fact);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('project/fact/new.html.twig', [
             'fact' => $fact,
             'form' => $form,
         ]);
