@@ -55,4 +55,6 @@ $ symfony serve
 PS
 ------------
 * L'admin a pour username : `root@phoenix.com` et pour mot de passe : `rootroot`
+* Le mot de passe des autres utilisateurs est : `Testtest123`
 * L'entité User est inutile, j'avais complètement raté mes entités initialement et ça m'aurait pris trop de temps de supprimer le tout
+* L'entité Admin remplace l'entité User

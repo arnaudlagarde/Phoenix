@@ -28,6 +28,17 @@ class MilestoneRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('m')
             ->getQuery();
     }
+    public function findByProjectId($id)
+    {
+        return $this->createQueryBuilder('r')
+            ->andWhere('r.projet = :val')
+            ->setParameter('val', $id)
+            ->orderBy('r.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return Milestone[] Returns an array of Milestone objects

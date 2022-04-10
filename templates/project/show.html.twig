@@ -12,6 +12,7 @@
     <small>terminé le {{ project.endedAt | date('d/m/Y') }}</small>
 
     <h2> Les risques</h2>
+    <a href="{{ path('app_create_risk') }}"><i class="fa-solid fa-plus-circle fa-2x"></i><h3>Créer un nouveau risque</h3> </a>
 
     <table class="table table-striped table-middle-aligned">
         <thead>
@@ -46,6 +47,7 @@
     </table>
 
     <h2> Les budgets du projet</h2>
+{#    <a href="{{ path('app_create_budget') }}"><i class="fa-solid fa-plus-circle fa-2x"></i><h3>Créer un nouveau budget</h3> </a>#}
 
     <table class="table table-striped table-middle-aligned">
         <thead>
@@ -80,6 +82,7 @@
     </table>
 
     <h2> Les jalons</h2>
+{#    <a href="{{ path('app_create_milestone') }}"><i class="fa-solid fa-plus-circle fa-2x"></i><h3>Créer un nouveau jalon</h3> </a>#}
 
     <table class="table table-striped table-middle-aligned">
         <thead>

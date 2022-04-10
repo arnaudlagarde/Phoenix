@@ -96,7 +96,7 @@ class ProjectController extends AbstractController
             'project' => $project,
             'risks' => $riskRepository->findByProjectId($id),
             'budgets' => $budgetRepository->findAll(),
-            'milestones' => $milestoneRepository->findAll()
+            'milestones' => $milestoneRepository->findByProjectId($id)
 
         ]);
     }

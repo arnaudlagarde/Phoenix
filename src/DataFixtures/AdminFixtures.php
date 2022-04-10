@@ -34,20 +34,23 @@ class AdminFixtures extends Fixture
         $this->addReference(self::class . 'root', $root);
         $manager->persist($root);
 
-        // Users
+        // Boss
         foreach (range(1, 20) as $i) {
             $admin = (new Admin())
                 ->setUsername($faker->unique()->safeEmail())
                 ->setFirstName($faker->firstName())
                 ->setLastName($faker->lastName())
-                ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
                 ->setRoles((array)'ROLE_USER');
+            $admin->setPassword($this->hasher->hashPassword(
+                $admin,
+                "Testtest123"
+            ));
 
             $this->addReference(self::class . "boss$i", $admin);
             $manager->persist($admin);
         }
 
-        // Boss
+        // Users
         foreach (range(1, 20) as $i) {
             $admin = (new Admin())
                 ->setUsername($faker->unique()->safeEmail())

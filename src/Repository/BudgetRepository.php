@@ -22,7 +22,7 @@ class BudgetRepository extends ServiceEntityRepository
     public function findByProjectId($id)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.projets = :val')
+            ->andWhere('r.projet = :val')
             ->setParameter('val', $id)
             ->orderBy('r.id', 'ASC')
             ->setMaxResults(10)
