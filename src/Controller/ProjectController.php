@@ -37,13 +37,10 @@ class ProjectController extends AbstractController
         if ($user !== null) {
             $username = $user->getUserIdentifier();
             $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
-            $queryProjects = $team->getProjet();
-
-
+            if ($team !== null) {
+                $queryProjects = $team->getProjet();
+            }
         }
-
-
-
 
         $queryFacts = $factRepository->getFact();
         $queryMilestones = $milestoneRepository->getMilestone();
@@ -69,11 +66,12 @@ class ProjectController extends AbstractController
     #[Route('/projects', name: 'app_projects')]
     public function projects(AdminRepository $adminRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $user = $this->getUser();
-        $username = $user->getUserIdentifier();
-        $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
+        $projects = [];
 
-        if ($team !== null) {
+        $user = $this->getUser();
+        if ($user !== null) {
+            $username = $user->getUserIdentifier();
+            $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
             $queryProjects = $team->getProjet();
             $projects = $paginator->paginate(
                 $queryProjects,
