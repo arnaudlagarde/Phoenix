@@ -32,9 +32,17 @@ class ProjectController extends AbstractController
     public function index(StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request, AdminRepository $adminRepository, ProjetRepository $projetRepository): Response
     {
         $user = $this->getUser();
-        $username = $user->getUserIdentifier();
-        $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
-        $queryProjects = $team->getProjet();
+        $queryProjects = [];
+
+        if ($user !== null) {
+            $username = $user->getUserIdentifier();
+            $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
+            $queryProjects = $team->getProjet();
+
+
+        }
+
+
 
 
         $queryFacts = $factRepository->getFact();
