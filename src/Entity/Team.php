@@ -33,12 +33,16 @@ class Team
     #[ORM\OneToMany(mappedBy: 'team', targetEntity: Admin::class)]
     private $admins;
 
+    #[ORM\OneToMany(mappedBy: 'teams', targetEntity: admin::class)]
+    private $users;
+
     public function __construct()
     {
         $this->responsible = new ArrayCollection();
         $this->member = new ArrayCollection();
         $this->Projet = new ArrayCollection();
         $this->admins = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,6 +188,36 @@ class Team
             // set the owning side to null (unless already changed)
             if ($admin->getTeam() === $this) {
                 $admin->setTeam(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, admin>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(admin $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setTeams($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(admin $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getTeams() === $this) {
+                $user->setTeams(null);
             }
         }
 

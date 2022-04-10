@@ -47,12 +47,12 @@ class AdminFixtures extends Fixture
                 ->setPassword('$2y$13$FGiCHNf3B6IqQcQEOigk8uR70qBaTT0OragQdwKPVC4ou0tJZSYJC')
                 ->setRoles((array)'ROLE_USER');
 
-            $this->addReference(self::class . "admin$i", $admin);
+            $this->addReference(self::class . "boss$i", $admin);
             $manager->persist($admin);
         }
 
         // Boss
-        foreach (range(1, 10) as $i) {
+        foreach (range(1, 20) as $i) {
             $admin = (new Admin())
                 ->setUsername($faker->unique()->safeEmail())
                 ->setFirstName($faker->firstName())
@@ -60,7 +60,7 @@ class AdminFixtures extends Fixture
                 ->setPassword('rootroot')
                 ->setRoles((array)'ROLE_USER');
 
-            $this->addReference(self::class . "boss$i", $admin);
+            $this->addReference(self::class . "user$i", $admin);
             $manager->persist($admin);
         }
 

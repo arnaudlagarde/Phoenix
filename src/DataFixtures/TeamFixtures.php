@@ -19,12 +19,11 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
         foreach (range(1, 8) as $i) {
             $team = (new Team())
                 ->setName('team n°' . $i)
-                ->addResponsible($this->getReference(UserFixtures::class."responsible$i"))
-                ->addMember($this->getReference(UserFixtures::class."responsible$i"));
+                ->addAdmin($this->getReference(AdminFixtures::class."boss$i"));
 
 
             foreach (range($userCount, $userCount + 1) as $user) {
-                $team->addMember($this->getReference(UserFixtures::class."user$user"));
+                $team->addAdmin($this->getReference(AdminFixtures::class."user$user"));
             }
 
 
@@ -42,7 +41,7 @@ class TeamFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            UserFixtures::class,
+            AdminFixtures::class,
         ];
     }
 }

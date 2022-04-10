@@ -25,8 +25,7 @@ class RegistrationFormType extends AbstractType
             ->add('lastName', TextType::class, [
                 'label' => 'Last Name',
                 'required' => true,
-            ]);
-        $builder
+            ])
             ->add('username')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,

@@ -5,41 +5,53 @@
 {% block body %}
 
     {% include 'base/nav.html.twig' %}
-    <h1>Mes projets</h1>
 
-    <table class="table table-striped table-middle-aligned">
-        <thead>
-        <tr>
-            <th scope="col">Titre</th>
-            <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Commencé le</th>
-            <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Fini le</th>
-            <th scope="col" class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i> Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for project in projects %}
+    {% if app.user %}
+        <h1>Mes projets</h1>
+
+        <table class="table table-striped table-middle-aligned">
+            <thead>
             <tr>
-                <td>{{ project.title }}</td>
-                <td>{{ project.startDate | date('d/m/Y') }}</td>
-                <td>{{ project.endedAt | date('d/m/Y') }}</td>
-                <td class="text-right">
-                    <div class="item-actions">
-                        <a href="{{ path('app_show_project', {id: project.id}) }}" class="btn btn-sm btn-default">
-                            <i class="fa fa-eye" aria-hidden="true"></i> Voir le projet
-                        </a>
-                    </div>
-                </td>
+                <th scope="col">Titre</th>
+                <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Commencé le</th>
+                <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Fini le</th>
+                <th scope="col" class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i> Actions</th>
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="4" align="center">Aucun Projet trouvé</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-center">
-        {{ knp_pagination_render(projects, 'base/pagination.html.twig') }}
-    </div>
+            </thead>
+            <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td>{{ project.title }}</td>
+                    <td>{{ project.startDate | date('d/m/Y') }}</td>
+                    <td>{{ project.endedAt | date('d/m/Y') }}</td>
+                    <td class="text-right">
+                        <div class="item-actions">
+                            <a href="{{ path('app_show_project', {id: project.id}) }}" class="btn btn-sm btn-default">
+                                <i class="fa fa-eye" aria-hidden="true"></i> Voir le projet
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" align="center">Aucun Projet trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            {{ knp_pagination_render(projects, 'base/pagination.html.twig') }}
+        </div>
+
+    {% else %}
+        <div class="row d-flex align-items-center justify-content-center text-center">
+            <div class="col-md-10 col-12">
+                <h1>Bienvenue</h1>
+                <h2>Veuillez vous connecter ou vous enregistrer</h2>
+            </div>
+        </div>
+    {% endif %}
 
     {% include 'base/footer.html.twig' %}
+    
 {% endblock %}

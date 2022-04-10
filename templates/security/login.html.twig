@@ -16,12 +16,12 @@
 
         {% if not app.user %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Admin zone</h1>
-        <label for="inputUsername">Username</label>
+        <h1 class="h3 mb-3 font-weight-normal">Connectez vous</h1>
+        <label for="inputUsername">Nom d'utilisateur ou Email</label>
         <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
-               autocomplete="username" required autofocus>
-        <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" autocomplete="current-password"
+               autocomplete="username"  class="form-control" required autofocus>
+        <label for="inputPassword">Mot de passe</label>
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password"
                required>
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

@@ -6,6 +6,8 @@
 
     {% include 'base/nav.html.twig' %}
 
+    {% if app.user %}
+
     <div class="container-fluid">
         <h1>Tableau de bord</h1>
         <div class="row">
@@ -185,6 +187,14 @@
             </div>
         </div>
     </div>
+    {% else %}
+        <div class="row d-flex align-items-center justify-content-center text-center">
+            <div class="col-md-10 col-12">
+                <h1>Bienvenue</h1>
+                <h2>Veuillez vous connecter ou vous enregistrer</h2>
+            </div>
+        </div>
+    {% endif %}
 
     {% include 'base/footer.html.twig' %}
 {% endblock %}
