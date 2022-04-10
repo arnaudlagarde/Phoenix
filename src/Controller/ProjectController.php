@@ -66,18 +66,25 @@ class ProjectController extends AbstractController
     #[Route('/projects', name: 'app_projects')]
     public function projects(AdminRepository $adminRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $projects = [];
+        //quick fix 
+        $queryProjects = [];
+        $projects = $paginator->paginate($queryProjects,
+            $request->query->get('page', 1),
+            15
+        );
 
         $user = $this->getUser();
         if ($user !== null) {
             $username = $user->getUserIdentifier();
             $team = $adminRepository->findOneBy(['username' => $username])->getTeam();
-            $queryProjects = $team->getProjet();
-            $projects = $paginator->paginate(
-                $queryProjects,
-                $request->query->get('page', 1),
-                15
-            );
+            if ($team !== null) {
+                $queryProjects = $team->getProjet();
+                $projects = $paginator->paginate(
+                    $queryProjects,
+                    $request->query->get('page', 1),
+                    15
+                );
+            }
         }
 
         return $this->render('project/projects.html.twig', [
