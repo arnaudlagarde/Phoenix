@@ -7,6 +7,7 @@ use App\Entity\Milestone;
 use App\Entity\Projet;
 use App\Entity\Risk;
 use App\Form\MilestoneFormType;
+use App\Form\ProjectFormType;
 use App\Form\RiskFormType;
 use App\Repository\BudgetRepository;
 use App\Repository\FactRepository;
@@ -69,6 +70,24 @@ class ProjectController extends AbstractController
             //'count' => $projetRepository->projectStatus()
         ]);
     }
+    #[Route('/new', name: 'app_create_project', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response {
+        $project = new Projet();
+        $form = $this->createForm(ProjectFormType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($project);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('project/new.html.twig', [
+            'project' => $project,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/project/{id}', name: 'app_show_project')]
     public function show(Projet $project, RiskRepository $riskRepository, $id, BudgetRepository $budgetRepository, MilestoneRepository $milestoneRepository): Response
@@ -96,6 +115,18 @@ class ProjectController extends AbstractController
             'projects' => $projects
         ]);
     }
+
+
+
+
+
+
+
+
+
+
+
+
     #[Route('/fact/{id}', name: 'app_show_fact')]
     public function showFact(Fact $fact): Response
     {

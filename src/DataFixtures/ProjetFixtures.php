@@ -30,7 +30,7 @@ class ProjetFixtures extends Fixture implements DependentFixtureInterface
                 ->setEndedAt($faker->dateTimeThisYear($max = 'now', $timezone = 'Europe/Paris'))
                 ->setStartDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris'))
                 ->setCode(['red', 'blue', 'green'][random_int(0, 2)])
-                ->setDone($faker->boolean(20))
+                ->setDone($faker->boolean(7))
                 ->setBudget($this->getReference(BudgetFixtures::BUDGET_REFERENCE . $i))
                 ->setStatus($this->getReference(StatusFixtures::STATUS_REFERENCE.$status))
                 ->setTeam($this->getReference(TeamFixtures::TEAM_REFERENCE.$team))

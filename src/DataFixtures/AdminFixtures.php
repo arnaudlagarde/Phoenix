@@ -5,14 +5,18 @@ namespace App\DataFixtures;
 use App\Entity\Admin;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class AdminFixtures extends Fixture
 {
     public const ADMIN_REFERENCE = 'Admin_';
 
+    public function __construct(private UserPasswordHasherInterface $hasher) {
+    }
     public function load(ObjectManager $manager): void
     {
+
         $faker = \Faker\Factory::create('fr_FR');
 
         $admin = new Admin();
@@ -57,9 +61,12 @@ class AdminFixtures extends Fixture
                 ->setUsername($faker->unique()->safeEmail())
                 ->setFirstName($faker->firstName())
                 ->setLastName($faker->lastName())
-                ->setPassword('rootroot')
                 ->setRoles((array)'ROLE_USER');
 
+            $admin->setPassword($this->hasher->hashPassword(
+                $admin,
+                "Testtest123"
+            ));
             $this->addReference(self::class . "user$i", $admin);
             $manager->persist($admin);
         }

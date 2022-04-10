@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Nouveau projet
+{% endblock %}
+
+{% block body %}
+
+    {% include 'base/nav.html.twig' %}
+    <h1 class="text-center py-5">
+        Créer un nouveau projet
+    </h1>
+
+    {{ include('project/_form.html.twig') }}
+
+    <div class="text-center mb-3">
+
+        <a href="{{ path('app_create_project') }}"><i class="fa-solid fa-arrow-left-long fa-2x"></i></a>
+    </div>
+
+{% endblock %}

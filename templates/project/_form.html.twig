@@ -1,0 +1,85 @@
+{{ form_start(form) }}
+<div class="d-md-flex">
+    <div class="col-12 col-md-6 p-3">
+        {{ form_label(form.code, "Code") }}
+        {{ form_widget(form.code, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        {{ form_label(form.Title, "Title") }}
+        {{ form_widget(form.Title, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        {{ form_label(form.description, "Description") }}
+        {{ form_widget(form.description, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        {{ form_label(form.status, "Statut") }}
+        {{ form_widget(form.status, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        <div class="mb-3">
+            {{ form_label(form.startDate, "Début") }}
+            {{ form_widget(form.startDate.date) }}
+            <div class="d-none">
+                {{ form_widget(form.startDate.time.hour) }}
+                {{ form_widget(form.startDate.time.minute) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6 p-3">
+        {{ form_label(form.portfolio, "Portfolio") }}
+        {{ form_widget(form.portfolio, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        {{ form_label(form.team, "Équipe") }}
+        {{ form_widget(form.team, {
+            attr: {
+                class: "mb-3"
+            }
+        }) }}
+
+        <div class="mb-3">
+            <div class="text-center">
+                {{ form_label(form.budget, "Budget") }}
+            </div>
+
+            {{ form_label(form.budget.InitialValue, "Initial") }}
+            {{ form_widget(form.budget.InitialValue, {
+                attr: {
+                    class: "mb-3"
+                }
+            }) }}
+
+            {{ form_label(form.budget.ConsumedValue, "Consommé") }}
+            {{ form_widget(form.budget.ConsumedValue, {
+                attr: {
+                    class: "mb-3"
+                }
+            }) }}
+        </div>
+    </div>
+</div>
+
+<div class="text-center mb-3">
+    <button class="btn btn-warning">
+        {{ button_label|default('Enregistrer') }}
+    </button>
+</div>
+
+{{ form_end(form) }}

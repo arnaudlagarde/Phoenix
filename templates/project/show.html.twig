@@ -5,7 +5,7 @@
 {% block body %}
     {% include 'base/nav.html.twig' %}
 
-    <h1>Mon projet n°{{ project.id }}</h1>
+    <h1>Projet n°{{ project.id }}</h1>
     <h2>{{ project.title }}</h2>
     <p>{{ project.description }}</p>
     <small>crée le {{ project.startDate | date('d/m/Y') }}</small> <br>
