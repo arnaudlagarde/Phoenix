@@ -1,12 +1,17 @@
 {{ form_start(form) }}
 <div class="d-md-flex">
-    <div class="col-12 col-md-6 p-3">
+    <div class="h-100 row align-items-center">
         {{ form_label(form.name, "Name") }}
-        {{ form_widget(form.name, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
+        {{ form_widget(form.name) }}
+
+        <div class="col-12 col-md-6 p-3">
+            {{ form_label(form.milestone, "Milestone") }}
+            {{ form_widget(form.milestone) }}
+
+            {{ form_label(form.projet, "Projet") }}
+            {{ form_widget(form.projet) }}
+
+        </div>
 
         <div class="mb-3">
             {{ form_label(form.DateFact, "Début") }}
@@ -18,34 +23,11 @@
         </div>
 
         {{ form_label(form.description, "Description") }}
-        {{ form_widget(form.description, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
-
-
-    </div>
-
-    <div class="col-12 col-md-6 p-3">
-        {{ form_label(form.milestone, "Milestone") }}
-        {{ form_widget(form.milestone, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
-
-        {{ form_label(form.projet, "Projet") }}
-        {{ form_widget(form.projet, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
-
+        {{ form_widget(form.description) }}
     </div>
 </div>
 
-<button class="btn btn-warning">
+<button class="btn btn-dark">
     {{ button_label|default('Enregistrer') }}
 </button>
 

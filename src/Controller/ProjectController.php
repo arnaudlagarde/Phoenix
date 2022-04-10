@@ -243,4 +243,20 @@ class ProjectController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/milestone/{id}/edit', name: 'app_edit_milestone', methods: ['GET', 'POST'])]
+    public function editMilestone(Request $request, Milestone $milestone, EntityManagerInterface $entityManager): Response {
+        $form = $this->createForm(MilestoneFormType::class, $milestone);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('milestone/edit.html.twig', [
+            'milestone' => $milestone,
+            'form' => $form,
+        ]);
+    }
 }
