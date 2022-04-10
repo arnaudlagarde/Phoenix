@@ -1,0 +1,19 @@
+{{ form_start(form) }}
+<div class="d-md-flex">
+    <div class="col-12 col-md-6">
+        {{ form_label(form.InitialValue, "InitialValue") }}
+        {{ form_widget(form.InitialValue) }}
+
+        {{ form_label(form.ConsumedValue, "ConsumedValue") }}
+        {{ form_widget(form.ConsumedValue) }}
+
+        {{ form_label(form.TurnoverBudget, "TurnoverBudget") }}
+        {{ form_widget(form.TurnoverBudget) }}
+    </div>
+</div>
+
+<button class="btn btn-dark">
+    {{ button_label|default('Enregistrer') }}
+</button>
+
+{{ form_end(form) }}

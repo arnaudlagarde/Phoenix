@@ -1,33 +1,18 @@
 {{ form_start(form) }}
 <div class="d-md-flex">
-    <div class="col-12 col-md-6 p-3">
+    <div class="col-12 col-md-6">
         {{ form_label(form.code, "Code") }}
-        {{ form_widget(form.code, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
+        {{ form_widget(form.code) }}
 
         {{ form_label(form.Title, "Title") }}
-        {{ form_widget(form.Title, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
-
+        {{ form_widget(form.Title) }}
+        <div class="col-12 col-md-6">
         {{ form_label(form.description, "Description") }}
-        {{ form_widget(form.description, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
+        {{ form_widget(form.description) }}
+        </div>
 
         {{ form_label(form.status, "Statut") }}
-        {{ form_widget(form.status, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
+        {{ form_widget(form.status) }}
 
         <div class="mb-3">
             {{ form_label(form.startDate, "Début") }}
@@ -41,11 +26,7 @@
 
     <div class="col-12 col-md-6 p-3">
         {{ form_label(form.portfolio, "Portfolio") }}
-        {{ form_widget(form.portfolio, {
-            attr: {
-                class: "mb-3"
-            }
-        }) }}
+        {{ form_widget(form.portfolio) }}
 
         {{ form_label(form.team, "Équipe") }}
         {{ form_widget(form.team, {

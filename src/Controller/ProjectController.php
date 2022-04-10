@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Budget;
 use App\Entity\Fact;
 use App\Entity\Milestone;
 use App\Entity\Projet;
 use App\Entity\Risk;
+use App\Form\BudgetFormType;
 use App\Form\FactFormType;
 use App\Form\MilestoneFormType;
 use App\Form\ProjectFormType;
@@ -14,7 +16,6 @@ use App\Repository\AdminRepository;
 use App\Repository\BudgetRepository;
 use App\Repository\FactRepository;
 use App\Repository\MilestoneRepository;
-use App\Repository\ProjetRepository;
 use App\Repository\RiskRepository;
 use App\Repository\StatusRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -260,6 +261,23 @@ class ProjectController extends AbstractController
 
         return $this->renderForm('milestone/edit.html.twig', [
             'milestone' => $milestone,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/budget/{id}/edit', name: 'app_edit_budget', methods: ['GET', 'POST'])]
+    public function editBudget(Request $request, Budget $budget, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(BudgetFormType::class, $budget);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_homepage', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('budget/edit.html.twig', [
+            'budget' => $budget,
             'form' => $form,
         ]);
     }

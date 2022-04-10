@@ -178,7 +178,7 @@
                             <th scope="col"> Nom</th>
                             <th scope="col"> Valeur</th>
                             <th scope="col">Mandataire</th>
-                            <th scope="col" class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i>
+                            <th scope="col"><i class="fa fa-cogs" aria-hidden="true"></i>
                                 Actions
                             </th>
                         </tr>
@@ -191,7 +191,10 @@
                                 <td>{{ milestone.mandatory }}</td>
                                 <td class="text-right">
                                     <div class="item-actions">
-
+                                        <a href="{{ path('app_edit_milestone', {id: milestone.id}) }}"
+                                           class="btn btn-sm btn-default">
+                                            <i class="fa fa-edit" aria-hidden="true"></i> Modifier le jalon
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
