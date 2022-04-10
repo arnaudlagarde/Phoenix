@@ -7,7 +7,11 @@
     {% include 'base/nav.html.twig' %}
 
     {% if app.user %}
-        <h1>Mes projets</h1>
+        <div id="containerIntro">
+            <h1>Mes projets</h1>
+            <a href="{{ path('app_create_project') }}"><i class="fa-solid fa-plus-circle fa-2x"></i></a>
+        </div>
+
 
         <table class="table table-striped table-middle-aligned">
             <thead>
@@ -57,5 +61,5 @@
     {% endif %}
 
     {% include 'base/footer.html.twig' %}
-    
+
 {% endblock %}

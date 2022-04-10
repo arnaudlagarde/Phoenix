@@ -23,15 +23,12 @@ Installation des dépendances JS
 $ yarn install ou npm install
 ```
 
-
+Compilation des assets
 ```bash
 $ yarn dev
 ```
 Modification du .env
 
-```bash
-$ yarn dev
-```
 Création de la base de données
 ```bash
 $ symfony console d:d:c
@@ -54,3 +51,8 @@ Lancement du serveur
 ```bash
 $ symfony serve
 ```
+
+PS
+------------
+
+* L'entité User est inutile, j'avais complètement raté mes entités initialement et ça m'aurait pris trop de temps de supprimer le tout

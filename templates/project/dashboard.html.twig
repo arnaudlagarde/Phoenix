@@ -28,6 +28,9 @@
                                     <th scope="col">Titre</th>
                                     <th scope="col"><i class="fa fa-calendar" aria-hidden="true"></i> Date</th>
                                     <th scope="col"><i class="fa-solid fa-circle-info"></i> Description</th>
+                                    <th scope="col"><i class="fa fa-cogs" aria-hidden="true"></i>
+                                        Actions
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -37,6 +40,14 @@
                                         </td>
                                         <td>{{ fact.dateFact | date('d/m/Y') }}</td>
                                         <td>{{ fact.description }}</td>
+                                        <td class="text-right">
+                                            <div class="item-actions">
+                                                <a href="#"
+                                                   class="btn btn-sm btn-default">
+                                                    <i class="fa fa-edit" aria-hidden="true"></i> Modifier le fait
+                                                </a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 {% else %}
                                     <tr>
