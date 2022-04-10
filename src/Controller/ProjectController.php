@@ -29,7 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProjectController extends AbstractController
 {
     #[Route('/', name: 'app_homepage')]
-    public function index(StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request, AdminRepository $adminRepository, ProjetRepository $projetRepository): Response
+    public function index(StatusRepository $statusRepository, MilestoneRepository $milestoneRepository, FactRepository $factRepository, PaginatorInterface $paginator, Request $request, AdminRepository $adminRepository): Response
     {
         $user = $this->getUser();
         $queryProjects = [];
