@@ -58,7 +58,7 @@
                         <div class="col-12">
                             {% if projects|length > 0 %}
                                 <h2><i class="fa-solid fa-bars"></i> Mes projets</h2>
-                                <a href="{{ path('app_create_project') }}"><i class="fa-solid fa-arrow-left-long fa-2x">aaaaaa</i></a>
+                                <a href="{{ path('app_create_project') }}"><h3>Créer un nouveau projet</h3><i class="fa-solid fa-plus-circle fa-2x"></i> </a>
                             {% else %}
                                 <h2><i class="fa-solid fa-bars"></i> Aucun projet trouvé</h2>
                             {% endif %}
@@ -88,6 +88,10 @@
                                                 <a href="{{ path('app_show_project', {id: project.id}) }}"
                                                    class="btn btn-sm btn-default">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> Voir le projet
+                                                </a>
+                                                <a href="{{ path('app_edit_project', {id: project.id}) }}"
+                                                   class="btn btn-sm btn-default">
+                                                    <i class="fa fa-edit" aria-hidden="true"></i> Modifier le projet
                                                 </a>
                                             </div>
                                         </td>
